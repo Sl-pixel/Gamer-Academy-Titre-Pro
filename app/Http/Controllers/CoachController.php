@@ -20,7 +20,7 @@ class CoachController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        $coachings = Coaching::whereIn('status', ['accepted', 'done'])->paginate(10);
+        // $coachings = Coaching::whereIn('status', ['accepted'])->paginate(10);
         $demandes = $user->demandesCoaching()->get();
         $coachingIncoming = $user->coachings()->get();
 
@@ -43,7 +43,7 @@ class CoachController extends Controller
             ->sum('amount');
 
         // Passer les données à la vue
-        return view('coach.dashboard', compact('user', 'yearlyRevenue', 'monthlyRevenue', 'dailyRevenue', 'coachings', 'demandes', 'coachingIncoming'));
+        return view('coach.dashboard', compact('user', 'yearlyRevenue', 'monthlyRevenue', 'dailyRevenue', 'demandes', 'coachingIncoming'));
     }
 
     public function updateCoachBio(Request $request, $id)
@@ -97,18 +97,37 @@ class CoachController extends Controller
 
     public function demandeAccept(Request $request, $id)
     {
+        // Utiliser une transaction pour s'assurer que les deux opérations (création du coaching
+        // et mise à jour de la demande) réussissent ou échouent ensemble.
+        DB::transaction(function () use ($id) {
+            // 1. Trouver la demande en attente par son ID
+            $demande = Demande::where('id', $id)->where('status', 'pending')->firstOrFail();
 
-        $request->validate([
-            'status' => 'required|accepted'
-        ]);
+            // 2. Vérifier que le coach authentifié est bien celui de la demande
+            if (auth()->user()->id !== $demande->coach_id) {
+                abort(403, 'Action non autorisée.');
+            }
 
-        $demandeAccepted = Demande::findOrFail($id);
-        $coaching = new Coaching();
-        $coaching->demande_id = $demandeAccepted->id;
-        $coaching->status = $request->input('status');
-        $coaching->save();
+            // 3. Créer une nouvelle session de coaching à partir des détails de la demande.
+            // On utilise `firstOrCreate` pour éviter de créer des doublons si l'action est déclenchée plusieurs fois.
+            Coaching::firstOrCreate(
+                ['demande_id' => $demande->id],
+                [
+                    'user_id' => $demande->user_id,
+                    'coach_id' => $demande->coach_id,
+                    'game_id' => $demande->game_id,
+                    'title' => $demande->title,
+                    'description' => $demande->description,
+                    'status' => 'accepted', // Le statut est défini comme 'accepted'
+                ]
+            );
 
-        return back()->with('success', 'Status du Coaching mis à jour avec succès.');
+            // 4. Mettre à jour le statut de la demande
+            $demande->status = 'accepted';
+            $demande->save();
+        });
 
+        // 5. Rediriger avec un message de succès
+        return back()->with('success', 'La demande de coaching a été acceptée et une nouvelle session a été créée.');
     }
 }

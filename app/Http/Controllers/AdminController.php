@@ -23,7 +23,7 @@ class AdminController extends Controller
         $coachs = User::where('role', 'coach')->get();
         $coachings = Coaching::whereIn('status', ['accepted', 'done'])->paginate(10);
         $students = User::where('role', 'student')->get();
-        $demandes = Demande::whereIn('status', ['pending', 'rejected'])->get();
+        $demandes = Demande::whereIn('status', ['pending', 'rejected', 'accepted'])->get();
         return view('admin.dashboard', compact('coachings', 'students', 'coachs', 'demandes'));
     }
 
@@ -113,11 +113,19 @@ public function updateUser(Request $request, $id)
         $user = User::findOrFail($id);
         return view('admin.user.note', compact('user'));
     }
+    public function showDemandes($id)
+    {
+        $user = User::findOrFail($id);
+        $demandes = $user->demandesCoaching()->get();
+
+        return view('admin.user.note', compact('user'));
+    }
 
     public function showUserInfo($id)
     {
         $user = User::find($id);
-        return view('admin.user.show', compact('user'));
+
+        return view('admin.user.show', compact('user', 'demandes'));
     }
 
     public function showCoachingInfo($id)

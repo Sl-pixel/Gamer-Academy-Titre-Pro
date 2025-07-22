@@ -7,7 +7,7 @@
     <div class="flex justify-between items-center mb-8">
         <h1 class="text-4xl font-bold text-gray-900">Liste des Demandes</h1>
         <div class="flex justify-end">
-            <a href="{{ route('adminDashboard') }}"
+            <a href="{{ route('coachDashboard', $user->id) }}"
                 class="px-6 py-3 bg-indigo-600 text-white text-sm leading-5 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
                 Retour
             </a>
