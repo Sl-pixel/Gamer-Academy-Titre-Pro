@@ -17,7 +17,7 @@
                 </div>
                 <button
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
-                    <a href="{{ route('editUser', $user->id) }}" class="flex items-center">
+                    <a href="{{ route('editProfile', $user->id) }}" class="flex items-center">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -110,10 +110,14 @@
                 </div>
                 <p class="mt-3 text-gray-600">Affichage des réservations de {{ $user->name }}</p>
                 <div id="calendly-calendar" class="mt-4">
-                    <iframe src="https://calendly.com/votre-calendrier" width="100%" height="400" frameborder="0"
-                        allowfullscreen sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-                        loading="lazy"></iframe>
-                </div>
+    @if($user->calendly_url)
+        <iframe src="{{ $user->calendly_url }}" width="100%" height="600" frameborder="0"
+            allowfullscreen sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+            loading="lazy"></iframe>
+    @else
+        <p class="text-gray-500">Aucun calendrier Calendly renseigné.</p>
+    @endif
+</div>
             </div>
 
             <!-- Coaching à Venir dans la Semaine Actuelle -->
@@ -126,25 +130,30 @@
                     </svg>
                     <h2 class="text-xl font-bold text-gray-800">Coaching à Venir</h2>
                 </div>
-                @foreach ($coachingIncoming as $coaching)
-                <ul class="mt-4 space-y-3">
-                    <li class="p-4 bg-white rounded-lg shadow-sm">
-                        <div class="flex items-center">
-                            <svg class="w-5 h-5 text-blue-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
-                                </path>
-                            </svg>
-                            <div>
-                                <p class="font-semibold text-gray-700">Eleve :  <span class="font-normal">{{ $coaching->user->name }}</span></p>
-                                <p class="font-semibold text-gray-700">Eleve :  <span class="font-normal">{{ $coaching->coach->name }}</span></p>
-                                <p class="text-sm text-gray-500">Date : $coaching->duree</p>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                @endforeach
+              @foreach ($coachingIncoming as $coaching)
+<ul class="mt-4 space-y-3">
+    <li class="p-4 bg-white rounded-lg shadow-sm">
+        <div class="flex items-center">
+            <svg class="w-5 h-5 text-blue-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                </path>
+            </svg>
+            <div>
+                <p class="font-semibold text-gray-700">Élève : <span class="font-normal">{{ $coaching->user->name }}</span></p>
+                <p class="text-sm text-gray-500">Date : {{ $coaching->date_coaching }}</p>
+                @if($coaching->game)
+                    <p class="text-sm text-gray-500">Jeu : {{ $coaching->game->name }}</p>
+                @endif
+            </div>
+        </div>
+        <div>
+            <a href="{{ route('showCoachingInfo', $coaching->id) }}" class="text-blue-600 hover:underline text-sm">Voir la fiche coaching</a>
+        </div>
+    </li>
+</ul>
+@endforeach
             </div>
         </div>
 

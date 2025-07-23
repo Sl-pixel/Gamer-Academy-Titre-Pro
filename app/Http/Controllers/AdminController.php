@@ -54,6 +54,7 @@ public function updateUser(Request $request, $id)
         'email' => 'required|email|unique:users,email,' . $id,
         'password' => 'nullable|string|min:4',
         'discord' => 'nullable|string|unique:users,discord,' . $id,
+        'profile_photo' => 'nullable|image|max:2048', // Ajout validation image
     ]);
 
     $user = User::findOrFail($id);
@@ -68,9 +69,15 @@ public function updateUser(Request $request, $id)
         $user->discord = $request->input('discord');
     }
 
+    // Ajout de la mise à jour de la photo de profil
+    if ($request->hasFile('profile_photo')) {
+        $path = $request->file('profile_photo')->store('profile_pictures', 'public');
+        $user->profile_picture = $path;
+    }
+
     $user->save();
 
-    return  back()->with('success', 'Utilisateur mis à jour avec succès.');
+    return back()->with('success', 'Utilisateur mis à jour avec succès.');
 }
 
     public function updateRoleOnly(Request $request, $id)
@@ -124,6 +131,7 @@ public function updateUser(Request $request, $id)
     public function showUserInfo($id)
     {
         $user = User::find($id);
+        $demandes = $user->demandesCoaching()->get();
 
         return view('admin.user.show', compact('user', 'demandes'));
     }
@@ -170,7 +178,7 @@ public function updateUser(Request $request, $id)
         }
 
         // Pass the coaching session, coach, and student to the view
-        return view('admin.demande.show', compact('demande', 'coach', 'student'));
+        return view('admin.user.demande', compact('demande', 'coach', 'student'));
     }
 public function showList(string $type): View
 {

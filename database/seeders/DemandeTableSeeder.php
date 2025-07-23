@@ -16,7 +16,7 @@ class DemandeTableSeeder extends Seeder
     public function run()
     {
         // Vider la table avant d'insérer de nouvelles données
-        DB::table('demandes')->truncate();
+       DB::table('demandes')->delete();
 
         // Récupérer les utilisateurs et les jeux
         $students = DB::table('users')->where('role', 'student')->get();
@@ -41,9 +41,11 @@ class DemandeTableSeeder extends Seeder
                     'coach_id' => $coach->id,
                     'game_id' => $coach->game_id ?? $gameIds[array_rand($gameIds)],
                     'status' => $statuses[array_rand($statuses)],
+                    'date_coaching' => now()->addDays(rand(1, 30)), // <-- Ajout ici
                     'message' => 'Message de requête exemple pour la demande de ' . $student->name,
                     'discord' => $student->discord,
                     'duree' => rand(30, 120),
+                    
                 ];
             }
         }
@@ -63,6 +65,7 @@ class DemandeTableSeeder extends Seeder
                         'coach_id' => $coach->id,
                         'game_id' => $coach->game_id ?? $gameIds[array_rand($gameIds)],
                         'status' => $statuses[array_rand($statuses)],
+                        'date_coaching' => now()->addDays(rand(1, 30)), // <-- Ajout ici
                         'message' => 'Message de requête supplémentaire pour le coach ' . $coach->name,
                         'discord' => $student->discord,
                         'duree' => rand(30, 120),

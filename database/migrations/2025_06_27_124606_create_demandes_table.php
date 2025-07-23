@@ -20,9 +20,12 @@ return new class extends Migration
             $table->unsignedBigInteger('game_id'); // ID du jeu pour lequel la demande est faite
             $table->string('discord')->nullable(); // ID du jeu pour lequel la demande est faite
             $table->integer('duree')->nullable(); // Use 'time' or 'integer' for duration, not 'dateTime'
+            $table->dateTime('date_coaching')->nullable();
+
             $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending'); // Statut de la demande
             $table->text('message'); //explic
-            
+            $table->timestamps();
+
             
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('coach_id')->references('id')->on('users')->onDelete('cascade');

@@ -11,7 +11,7 @@ class Coaching extends Model
 
     protected $table = 'coachings';
 
-    protected $fillable = ['user_id', 'game_id', 'coach_id', 'date_coaching', 'duree', 'commentaires', 'status'];
+    protected $fillable = ['user_id', 'game_id', 'coach_id', 'date_coaching', 'duree', 'commentaires', 'status', 'demande_id'];
 
     public function user()
     {

@@ -48,6 +48,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Demande::class, 'coach_id', 'id'); // Relation avec le modèle Request
     }
+    public function demandes()
+{
+    return $this->hasMany(Demande::class);
+}
 
     public function students()
     {

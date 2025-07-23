@@ -5,6 +5,11 @@
 @section('content')
 <div class="container mx-auto p-6">
     <div class="flex justify-between items-center mb-8">
+         @if(session('success'))
+            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6" role="alert">
+                <p>{{ session('success') }}</p>
+            </div>
+        @endif
         <h1 class="text-4xl font-bold text-gray-900">Liste des Demandes</h1>
         <div class="flex justify-end">
             <a href="{{ route('coachDashboard', $user->id) }}"
@@ -22,6 +27,8 @@
                 <p class="text-gray-600"><strong>Utilisateur:</strong> {{ $demande->user->name }}</p>
                 <p class="text-gray-600"><strong>Coach:</strong> {{ $demande->coach->name }}</p>
                 <p class="text-gray-600"><strong>Message:</strong> {{ $demande->message }}</p>
+                <p class="text-gray-600"><strong>Date:</strong> {{ $demande->date_coaching }}</p>
+                <p class="text-gray-600"><strong>id:</strong> {{ $demande->id }}</p>
                 <p class="text-gray-600">
                     <strong>Status:</strong>
                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
@@ -31,22 +38,23 @@
                 </p>
             </div>
             <div class="mt-6 flex space-x-4">
-                <form method="POST" action="{{ route('demandeAccept', $demande->id) }}" class="inline">
+                <form action="{{ route('demande.traiter', $demande->id) }}" method="POST" class="inline-block">
                     @csrf
                     @method('PUT')
-                    <button type="submit"
-                        class="px-4 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition duration-200">
+                    <input type="hidden" name="action" value="accept">
+                    <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-150 ease-in-out">
                         Accepter
                     </button>
                 </form>
-                <form method="POST" action="{{-- route('demande.reject', $demande->id) --}}" class="inline">
+                <form action="{{ route('demande.traiter', $demande->id) }}" method="POST" class="inline-block">
                     @csrf
                     @method('PUT')
-                    <button type="submit"
-                        class="px-4 py-2 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 transition duration-200">
+                    <input type="hidden" name="action" value="reject">
+                    <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 ease-in-out">
                         Refuser
                     </button>
                 </form>
+
             </div>
         </div>
         @endforeach

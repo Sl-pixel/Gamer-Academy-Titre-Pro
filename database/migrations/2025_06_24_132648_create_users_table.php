@@ -21,11 +21,14 @@ return new class extends Migration
             $table->string('notes')->nullable();
             $table->string('rank')->nullable();
             $table->string('tarif')->nullable();
-            $table->bigInteger('game_id')->nullable();
+            $table->unsignedBigInteger('game_id')->nullable();
             $table->enum('role', ['admin', 'coach', 'student'])->default('student');
             $table->string('profile_picture')->nullable();
             $table->string('biographie')->nullable();
             $table->timestamps();
+
+            $table->foreign('game_id')->references('id')->on('games')->onDelete('set null');
+
         });
     }
 

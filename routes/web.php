@@ -37,10 +37,11 @@ Route::get('/contact', [HomeController::class, 'contactForm'])->name('contact');
 Route::get('/admin/user/{id}/user-Info', [AdminController::class, 'showUserInfo'])->name('showUserInfo');
 Route::get('/admin/user/{id}/show-Notes', [AdminController::class, 'showNotes'])->name('showNotes');
 Route::get('/admin/coaching/{id}/coaching-Info', [AdminController::class, 'showCoachingInfo'])->name('showCoachingInfo');
-Route::get('/admin/demande/{id}/Demande-Info', [AdminController::class, 'showDemandeInfo'])->name('showDemandeInfo');
+Route::get('/admin/demande/{id}/show', [AdminController::class, 'showDemandeInfo'])->name('showDemandeInfo');
 
 // edit user
 Route::get('/admin/user/{id}/edit', [AdminController::class, 'editUser'])->name('editUser');
+Route::get('/profile/user/{id}/edit', [UserController::class, 'editProfile'])->name('editProfile');
 // edit demande
 Route::get('/admin/demande/{id}/edit', [AdminController::class, 'editDemande'])->name('editDemande');
 
@@ -90,8 +91,10 @@ Route::get('/coachings', [AdminController::class, 'showList'])->name('coaching.l
 // update
 Route::put('/admin/dashboard/{id}/update-biographie', [CoachController::class, 'updateCoachBio'])->name('updateCoachBio');
 Route::put('/admin/dashboard/{id}/update-tarif', [CoachController::class, 'updateCoachTarif'])->name('updateCoachTarif');
+Route::put('/user/{user}/update-game', [UserController::class, 'updateGame'])->name('user.updateGame');
+
 // show
 Route::get('/coach/show/demandes/{id}', [CoachController::class, 'showDemandeCoach'])->name('showDemandeCoach');
 
-// demande accepted
-Route::put('/demandes/{id}/accepted', [CoachController::class, 'demandeAccept'])->name('demandeAccept');
+// gestion du status des demandes
+Route::put('/demande/{id}/traiter', [CoachController::class, 'traiterDemande'])->name('demande.traiter');

@@ -9,6 +9,7 @@ use \App\Models\Coaching;
 use \App\Models\Demande;
 use \App\Models\Game;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 class CoachController extends Controller
 {
@@ -95,39 +96,52 @@ class CoachController extends Controller
     }
 
 
-    public function demandeAccept(Request $request, $id)
-    {
-        // Utiliser une transaction pour s'assurer que les deux opérations (création du coaching
-        // et mise à jour de la demande) réussissent ou échouent ensemble.
-        DB::transaction(function () use ($id) {
-            // 1. Trouver la demande en attente par son ID
-            $demande = Demande::where('id', $id)->where('status', 'pending')->firstOrFail();
+ public function traiterDemande(Request $request, $id)
+{
+    $action = $request->input('action'); // 'accept' ou 'reject'
 
-            // 2. Vérifier que le coach authentifié est bien celui de la demande
-            if (auth()->user()->id !== $demande->coach_id) {
-                abort(403, 'Action non autorisée.');
-            }
+    DB::transaction(function () use ($id, $action) {
+        $demande = Demande::where('id', $id)->where('status', 'pending')->firstOrFail();
 
-            // 3. Créer une nouvelle session de coaching à partir des détails de la demande.
-            // On utilise `firstOrCreate` pour éviter de créer des doublons si l'action est déclenchée plusieurs fois.
+        if (auth()->user()->id !== $demande->coach_id) {
+            abort(403, 'Action non autorisée.');
+        }
+
+        if ($action === 'accept') {
             Coaching::firstOrCreate(
                 ['demande_id' => $demande->id],
                 [
-                    'user_id' => $demande->user_id,
-                    'coach_id' => $demande->coach_id,
-                    'game_id' => $demande->game_id,
-                    'title' => $demande->title,
-                    'description' => $demande->description,
-                    'status' => 'accepted', // Le statut est défini comme 'accepted'
+                    'user_id'      => $demande->user_id,
+                    'coach_id'     => $demande->coach_id,
+                    'game_id'      => $demande->game_id,
+                    'date_coaching'=> $demande->date_coaching,
+                    'duree'        => $demande->duree,
+                    'commentaires' => $demande->message,
+                    'status'       => 'accepted',
                 ]
             );
-
-            // 4. Mettre à jour le statut de la demande
             $demande->status = 'accepted';
-            $demande->save();
-        });
+        } elseif ($action === 'reject') {
+            $demande->status = 'rejected';
+        }
+        $demande->save();
+    });
 
-        // 5. Rediriger avec un message de succès
-        return back()->with('success', 'La demande de coaching a été acceptée et une nouvelle session a été créée.');
-    }
+    return back()->with('success', 'La demande a été traitée.');
+}
+
+
+public function getCalendlyEvents($coach)
+{
+    $token = 'CALENDLY_PERSONAL_ACCESS_TOKEN';
+    $userUri = $coach->calendly_user_uri; // à stocker lors de la connexion Calendly
+
+    $response = Http::withToken($token)
+        ->get('https://api.calendly.com/scheduled_events', [
+            'user' => $userUri,
+        ]);
+
+    $events = $response->json()['collection'] ?? [];
+    return view('coach.dashboard', compact('events'));
+}
 }
