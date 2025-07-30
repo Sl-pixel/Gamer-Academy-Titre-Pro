@@ -39,9 +39,6 @@
                     <label class="text-gray-600" for="remember">Se souvenir de moi</label>
                 </div>
 
-                @error('authError')
-                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                @enderror
 
                 <button type="submit" class="w-full bg-indigo-700 hover:bg-indigo-800 text-white font-semibold py-2 rounded transition">Se connecter</button>
 

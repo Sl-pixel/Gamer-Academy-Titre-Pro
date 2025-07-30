@@ -4,12 +4,21 @@
      <div class="container mx-auto p-6">
         <div class="flex justify-between items-center mb-8">
             <h1 class="text-4xl font-bold text-gray-900">Tableau des Coachings</h1>
-            <div class="flex justify-end">
-                <a href="{{ route('adminDashboard') }}"
-                    class="px-4 py-2 bg-indigo-600 text-white text-sm leading-5 rounded-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <!-- Navigation Buttons -->
+            <div class="mt-6 flex justify-start space-x-4">
+                <button onclick="goBack()" class="px-4 py-2 bg-indigo-500 text-white rounded-lg shadow hover:bg-indigo-600 transition duration-300">
                     Retour
-                </a>
+                </button>
             </div>
+
+            <script>
+            // Cette fonction utilise l'objet history de JavaScript pour revenir à la page précédente dans l'historique de navigation du navigateur.
+            function goBack() {
+                window.history.back(); // Retourne à la page précédente
+            }
+            </script>
+
+
         </div>
         <div class="bg-white shadow-xl rounded-xl overflow-hidden">
             

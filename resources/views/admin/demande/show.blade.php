@@ -1,7 +1,7 @@
 @extends('layout')
 @section('title', 'Coaching Session Details')
 @section('content')
-<div class="flex justify-center items-center min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+<div class="flex justify-center items-center min-h-screen py-12 px-4 sm:px-6 lg:px-8">
     <div class="w-full max-w-6xl bg-white shadow-xl rounded-2xl overflow-hidden">
         <div class="p-8">
             <h1 class="text-4xl font-extrabold text-gray-900 text-center mb-8">Detail de la demande de Coaching</h1>
@@ -22,7 +22,7 @@
                 <!-- Coach Info -->
                 <div class="lg:w-1/2 p-4 flex flex-col items-center">
                     <div class="bg-indigo-50 rounded-lg p-6 flex flex-col items-center w-full">
-                        <img src="{{ $coach->profile_picture }}" alt="Photo de {{ $coach->name }}"
+                        <img src="{{ $coach->profile_picture ? asset('storage/' . $coach->profile_picture) : asset('/images/default-avatar-profile.jpg')  }}" alt="Photo de {{ $coach->name }}"
                             class="w-40 h-40 rounded-full object-cover shadow-lg border-4 border-indigo-100 mb-4">
                         <h2 class="text-2xl font-bold text-indigo-800 mb-2 text-center">{{ $coach->name }}</h2>
                         <div class="mt-4 text-center">
@@ -34,7 +34,7 @@
                 <!-- Student Info -->
                 <div class="lg:w-1/2 p-4 flex flex-col items-center">
                     <div class="bg-purple-50 rounded-lg p-6 flex flex-col items-center w-full">
-                        <img src="{{ $student->profile_picture }}" alt="Photo de {{ $student->name }}"
+                        <img src="{{ $student->profile_picture ? asset('storage/' . $student->profile_picture) : asset('/images/default-avatar-profile.jpg')}}" alt="Photo de {{ $student->name }}"
                             class="w-40 h-40 rounded-full object-cover shadow-lg border-4 border-purple-100 mb-4">
                         <h2 class="text-2xl font-bold text-purple-800 mb-2 text-center">{{ $student->name }}</h2>
                         <div class="mt-4 text-center">
@@ -53,10 +53,19 @@
             </div>
         </div>
         <div class="mt-6 flex justify-center p-8 space-x-4">
-            <a href="{{ route('coaching.list') }}"
-                class="px-6 py-3 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition duration-200">
-                Retour
-            </a>
+            <button onclick="goBack()" class="px-4 py-2 bg-indigo-500 text-white text-sm leading-5 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300">
+    Retour
+</button>
+
+<script>
+// Cette fonction utilise l'objet history de JavaScript pour revenir à la page précédente dans l'historique de navigation du navigateur.
+function goBack() {
+    window.history.back(); // Retourne à la page précédente
+}
+</script>
+
+
+
             <a href="{{ route('editCoaching', $demande->id) }}"
                 class="px-6 py-3 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition duration-200">
                 Modifier

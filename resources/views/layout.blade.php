@@ -36,7 +36,7 @@
                             <li><a href="{{ route('coachDashboard', auth()->user()->id) }}" class="font-semibold text-gray-700 hover:text-indigo-700">Interface coach</a></li>
                         @endif
                         @if(auth()->user()->isStudent())
-                            <li><a href="{{ route('studentDashboard', auth()->user()->id) }}" class="font-semibold text-gray-700 hover:text-indigo-700">Mon Espace Élève</a></li>
+                            <li><a href="{{ route('editProfile', auth()->user()->id) }}" class="font-semibold text-gray-700 hover:text-indigo-700">Mon Espace Élève</a></li>
                         @endif
                         <li>
                             <a href="{{ route('logout') }}" class="font-semibold text-red-600 hover:text-red-800">Déconnexion</a>

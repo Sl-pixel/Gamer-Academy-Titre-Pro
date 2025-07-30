@@ -29,8 +29,7 @@
                             <option value="coach" {{ $user->role == 'coach' ? 'selected' : '' }}>Coach</option>
                             <option value="student" {{ $user->role == 'student' ? 'selected' : '' }}>Étudiant</option>
                         </select>
-                        @else
-                        if($user->role === 'student')
+                        @elseif($user->role === 'student')
                             <select name="role"
                             onchange="document.getElementById('submitRoleBtn').click()"
                             class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
@@ -47,7 +46,8 @@
                 @if($user->role === 'coach')
                 <div class="mt-6">
                     <label for="game_id" class="block text-gray-700 text-sm font-medium mb-1">Jeu associé</label>
-                    <span class="text-md font-semibold text-indigo-600 capitalize">{{ $user->game->name }}</span>
+                    <span class="text-md font-semibold text-indigo-600 capitalize">{{ $user->game->name ?? '' }}</span>
+
                     <form action="{{ route('user.updateGame', $user->id) }}" method="POST" id="gameForm" class="mt-4 w-full">
                         @csrf
                         @method('PUT')
@@ -55,11 +55,16 @@
                             onchange="document.getElementById('submitGameBtn').click()"
                             class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
                             <option value="">-- Sélectionner un jeu --</option>
-                            @foreach($games as $game)
-                                <option value="{{ $game->id }}" {{ $user->game_id == $game->id ? 'selected' : '' }}>
-                                    {{ $game->name }}
-                                </option>
+                            @foreach ($games as $game)
+                                @if ($game)
+                                    <option value="{{ $game->id }}" {{ $user->game_id == $game->id ? 'selected' : '' }}>
+                                        {{ $game->name }}
+                                    </option>
+                                @else
+                                    <p>Game is null</p>
+                                @endif
                             @endforeach
+
                         </select>
                         <button type="submit" id="submitGameBtn" class="hidden"></button>
                     </form>

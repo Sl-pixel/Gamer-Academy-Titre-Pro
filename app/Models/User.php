@@ -10,7 +10,7 @@ class User extends Authenticatable
     use HasFactory;
 
     protected $table = 'users'; // ou 'user' si ta table est bien au singulier
-    protected $fillable = ['name', 'email', 'password', 'role', 'profile_picture', 'biographie', 'revenues'];
+    protected $fillable = ['name', 'email', 'password', 'role', 'profile_picture', 'biographie', 'revenues', 'avaibility'];
     protected $hidden = ['password', 'remember_token', 'email'];
     public function isCoach()
     {

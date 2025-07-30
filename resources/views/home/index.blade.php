@@ -79,12 +79,12 @@
 
             <!-- Image de flèches de progression -->
             <div class="flex justify-center items-center">
-                <img src="{{ asset('images/Group.png') }}" alt="Flèches de progression" class="w-16 h-16 md:w-24 md:h-24" />
+                <img src="{{ asset('images/arrow.png') }}" alt="Flèches de progression" class="w-16 h-16 md:w-24 md:h-24" />
             </div>
 
             <!-- Étape 3 : Devenez un pro -->
             <div class="bg-white rounded-lg shadow p-6 w-72 flex flex-col items-center">
-                <img src="{{ asset('images/coupe.png') }}" class="w-16 h-16 mb-4" alt="Coupe trophée">
+                <img src="{{ asset('images/trophy.png') }}" class="w-16 h-16 mb-4" alt="Coupe trophée">
                 <h2 class="text-xl font-semibold mb-2 text-indigo-700">Devenez un pro</h2>
                 <p class="text-gray-700 text-center">
                     Commencez vos leçons avec notre entraîneur pour commencer à atteindre vos objectifs en jeu et devenir un

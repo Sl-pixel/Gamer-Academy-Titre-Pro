@@ -1,7 +1,7 @@
 @extends('layout')
 @section('title', 'Notes')
 @section('content')
-<div class="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-50 to-indigo-50 py-12 px-4 sm:px-6 lg:px-8">
+<div class="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray to-indigo py-12 px-4 sm:px-6 lg:px-8">
     <div class="w-full max-w-3xl bg-white shadow-2xl rounded-2xl overflow-hidden p-6">
         <div class="flex items-center mb-8">
             <svg class="w-10 h-10 text-indigo-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -86,12 +86,18 @@
         @endif
 
         <div class="mt-8 flex justify-start">
-            <a href="{{ route('showUserInfo', $user->id) }}" class="inline-flex items-center px-6 py-3 bg-indigo-600 text-white text-sm leading-5 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out transform hover:scale-105">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h12a2 2 0 012 2v4a2 2 0 01-2 2h-6m-4 0H7a2 2 0 01-2-2v-4a2 2 0 012-2h4"></path>
-                </svg>
-                Retour au profil
-            </a>
+                    <div class="mt-6 flex justify-start space-x-4">
+                        <button onclick="goBack()" class="px-4 py-2 bg-indigo-500 text-white rounded-lg shadow hover:bg-indigo-600 transition duration-300">
+                            Retour
+                        </button>
+                    </div>
+
+                    <script>
+                        // Cette fonction utilise l'objet history de JavaScript pour revenir à la page précédente dans l'historique de navigation du navigateur.
+                        function goBack() {
+                            window.history.back(); // Retourne à la page précédente
+                        }
+                    </script>
         </div>
     </div>
 </div>

@@ -22,11 +22,7 @@ class HomeController extends Controller
             'firstGame' => $firstGame,
         ]);
     }
-    public function showCoaches(Game $game)
-    {
-        $coaches = User::where('role', '=', 'coach')->where('game_id', $game->id)->get();
-        return view('home.showCoaches', compact('game', 'coaches'));
-    }
+
 
 public function contactForm () {
     return view('contact.contact');

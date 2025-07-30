@@ -42,7 +42,7 @@ class UserTableSeeder extends Seeder
                 'name' => 'Coach ' . $i,
                 'email' => 'coach' . $i . '@example.com',
                 'discord' => 'Coach#' . str_pad($i, 4, '0', STR_PAD_LEFT),
-                'password' => Hash::make('password' . $i),
+                'password' => Hash::make('password'),
                 'role' => 'coach',
                 'tarif' => rand(10, 30),
                 'game_id' => $gameId,

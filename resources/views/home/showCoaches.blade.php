@@ -39,7 +39,7 @@
                                 <span class="text-xl font-bold text-indigo-600">{{ $coach->tarif }}€/h</span>
 
                                 {{-- Bouton pour choisir le coach --}}
-                                <a href="{{-- route('selectCoach', $coach->id) --}}"
+                                <a href="{{ route('selectCoach', $coach->id) }}"
                                     class="bg-pink-600 hover:bg-pink-700 text-white font-semibold px-6 py-2 rounded-full shadow-lg transition-colors duration-300">
                                     Choisir
                                 </a>

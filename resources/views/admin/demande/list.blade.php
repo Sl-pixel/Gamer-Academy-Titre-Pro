@@ -32,8 +32,7 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                 <a href="{{ route('showDemandeInfo', $demande->id) }}"
                                     class="inline-block px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition duration-200 mr-2">Voir</a>
-                                <!-- <a href="{{ route('editDemande', $demande->id) }}"
-                                    class="inline-block px-4 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition duration-200 mr-2">Modifier</a> -->
+                          
                                 <form method="POST" action="{{ route('destroyDemande', $demande->id) }}" class="inline"
                                     onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce coaching ?');">
                                     @csrf

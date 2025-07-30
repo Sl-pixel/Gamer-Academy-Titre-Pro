@@ -30,10 +30,19 @@
                 </form>
 
              <div class="flex justify-center mt-6">
-        <a href="{{ route('student.list') }}"
-            class="px-4 py-2 bg-indigo-600 text-white text-sm leading-5 rounded-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Retour
-        </a>
+       <div class="mt-6 flex justify-start space-x-4">
+            <button onclick="goBack()" class="px-4 py-2 bg-indigo-500 text-white rounded-lg shadow hover:bg-indigo-600 transition duration-300">
+                Retour
+            </button>
+        </div>
+
+        <script>
+            // Cette fonction utilise l'objet history de JavaScript pour revenir à la page précédente dans l'historique de navigation du navigateur.
+            function goBack() {
+                window.history.back(); // Retourne à la page précédente
+            }
+        </script>
+
     </div>
             </div>
 

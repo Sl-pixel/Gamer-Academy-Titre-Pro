@@ -42,9 +42,8 @@ class AuthController extends Controller
             }
         }
 
-        return back()->withErrors([
-            'authError' => 'L’email ou le mot de passe est invalide'
-        ])->withInput($request->only('email', 'password'));
+       return redirect('/login')->with('error', 'L’email ou le mot de passe est invalide.');
+
     }
     public function logout()
     {
@@ -56,24 +55,28 @@ class AuthController extends Controller
 
         return view('auth.register');
     }
-    public function registerUser(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:4',
-        ]);
+    
+   public function registerUser(Request $request)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email|max:255',
+        'password' => 'required|string|min:4',
+    ], [
+        'email.unique' => 'Cet email est déjà utilisé. Veuillez utiliser un autre email.',
+    ]);
 
-        User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->password),
-            'role' => 'student',
-        ]);
+    User::create([
+        'name' => $request->input('name'),
+        'email' => $request->input('email'),
+        'password' => Hash::make($request->password),
+        'role' => 'student',
+    ]);
 
-        // rediriger l'utilisateur après la création
-        return redirect()->route('loginUser')->with('success', 'Utilisateur créé avec succès.');
-    }
+    // Rediriger l'utilisateur après la création
+    return redirect()->route('loginUser')->with('success', 'Utilisateur créé avec succès.');
+}
+
 
 }
 

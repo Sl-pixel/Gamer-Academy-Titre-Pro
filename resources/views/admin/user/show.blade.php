@@ -6,7 +6,7 @@
         <div class="flex flex-col lg:flex-row">
             <!-- Profile Picture Column -->
             <div class="flex flex-col items-center justify-center p-6 bg-indigo-600 lg:w-1/3">
-                <img src="{{ $user->profile_picture }}" alt="Photo de {{ $user->name }}"
+                <img src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('/images/default-avatar-profile.jpg') }}" alt="Photo de {{ $user->name }}"
                     class="w-40 h-40 rounded-full object-cover shadow-lg mb-4 border-4 border-white">
                 <span class="text-white font-bold text-xl capitalize">{{ $user->role }}</span>
             </div>
@@ -117,15 +117,21 @@
 
                 <!-- Navigation Buttons -->
                 <div class="mt-6 flex justify-start space-x-4">
-                    <a href="{{ route('student.list') }}"
-                        class="px-4 py-2 bg-gray-500 text-white text-sm leading-5 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-300">
-                        Retour
-                    </a>
-                    <a href="{{ route('editUser', $user->id) }}"
-                        class="px-4 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition duration-300">
-                        Modifier
-                    </a>
-                </div>
+    <button onclick="goBack()" class="px-4 py-2 bg-indigo-500 text-white rounded-lg shadow hover:bg-indigo-600 transition duration-300">
+        Retour
+    </button>
+    <a href="{{ route('editUser', $user->id) }}" class="px-4 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition duration-300">
+        Modifier
+    </a>
+</div>
+
+<script>
+    // Cette fonction utilise l'objet history de JavaScript pour revenir à la page précédente dans l'historique de navigation du navigateur.
+    function goBack() {
+        window.history.back(); // Retourne à la page précédente
+    }
+</script>
+
             </div>
         </div>
     </div>
