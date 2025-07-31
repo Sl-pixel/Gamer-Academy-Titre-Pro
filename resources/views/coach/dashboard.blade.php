@@ -130,7 +130,7 @@
                                 </div>
                             </div>
                             <div>
-                                <a href="{{ route('showCoachingInfo', $coaching->id) }}" class="text-blue-600 hover:underline text-sm">Voir la fiche coaching</a>
+                                <a href="{{ route('showCoaching', $coaching->id) }}" class="text-blue-600 hover:underline text-sm">Voir la fiche coaching</a>
                             </div>
                         </li>
                     </ul>

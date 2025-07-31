@@ -9,7 +9,7 @@
         <div class="flex flex-col md:flex-row gap-6">
             <!-- Colonne photo + rôle -->
             <div class="md:w-1/3 flex flex-col items-center border-r border-gray-200 pr-4">
-                <img src="{{ $user->profile_picture }}" alt="Photo de {{ $user->name }}"
+                <img src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('/images/default-avatar-profile.jpg') }}" alt="Photo de {{ $user->name }}"
                     class="rounded-full h-32 w-32 object-cover mb-4 shadow-md">
 
                 <p class="text-sm text-gray-600 mb-1">Rôle actuel :</p>

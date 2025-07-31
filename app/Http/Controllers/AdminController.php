@@ -35,15 +35,6 @@ class AdminController extends Controller
         return view('admin.user.edit', compact('user'));
     }
 
-    public function editCoaching($id)
-    {
-        $games = Game::all();
-        $coaching = Coaching::find($id);
-        $coach = User::find($coaching->coach_id);
-        $student = User::find($coaching->user_id);
-        return view('admin.coaching.edit', compact('coaching', 'student', 'coach', 'games'));
-    }
-
 
 
     // update
@@ -224,10 +215,41 @@ public function showList(string $type): View
         $coaching->delete();
         return redirect()->route('coaching.list')->with('success', 'Coaching supprimé.');
     }
+    public function destroyDemande($id)
+    {
+        $demande = Demande::find($id);
+
+        $demande->delete();
+        return redirect()->route('demande.list')->with('success', 'Demande supprimé.');
+    }
     public function destroyNote($id)
     {
         $note = Note::find($id);
         $note->delete();
         return back()->with('success', 'Note supprimée avec succès.');
     }
+
+    Public function create() {
+
+    return view('admin.create');
+    }
+public function createAdmin(Request $request) {
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email|max:255',
+        'password' => 'required|string|min:4',
+    ], [
+        'email.unique' => 'Cet email est déjà utilisé. Veuillez utiliser un autre email.',
+    ]);
+
+    User::create([
+        'name' => $request->input('name'),
+        'email' => $request->input('email'),
+        'password' => Hash::make($request->password),
+        'role' => 'admin',
+    ]);
+
+    return back()->with('success', 'Admin créé avec succès');
+}
+
 }

@@ -1,8 +1,15 @@
 @extends('layout')
+
 @section('title', 'Dashboard')
+
 @section('content')
 <div class="flex flex-col items-center justify-center min-h-[70vh]">
     <h1 class="text-4xl font-bold mb-8 text-gray-800">Tableau de Bord Administrateur</h1>
+
+    <a href="{{ route('create') }}" class="mb-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Créer un Adminisateur
+    </a>
+
     <div class="grid grid-cols-2 gap-6 w-full max-w-4xl">
         <!-- Première rangée -->
         <!-- Élèves -->
@@ -21,7 +28,6 @@
             <h2 class="text-2xl font-semibold text-gray-800">Coachings</h2>
             <p class="text-xl text-gray-600">{{ $coachings->count() }}</p>
         </a>
-
         <!-- Deuxième rangée -->
         <!-- Coachs -->
         <a href="{{ route('coach.list') }}" class="p-6 rounded-xl shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out transform hover:scale-105 flex flex-col items-center bg-white">

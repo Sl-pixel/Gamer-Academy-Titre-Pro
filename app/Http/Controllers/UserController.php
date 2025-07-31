@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 use \App\Models\User;
-use \App\Models\Demande;
-use \App\Models\Coaching;
 use \App\Models\Game;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
+
 
 
 class UserController extends Controller

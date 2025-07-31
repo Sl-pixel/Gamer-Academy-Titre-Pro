@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DemandeController;
+use App\Http\Controllers\CoachingController;
 use App\Http\Controllers\UserController; 
 
 
@@ -71,11 +73,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/user/{id}/user-Info', [AdminController::class, 'showUserInfo'])->name('showUserInfo');
     Route::get('/admin/user/{id}/show-Notes', [AdminController::class, 'showNotes'])->name('showNotes');
     Route::get('/admin/coaching/{id}/coaching-Info', [AdminController::class, 'showCoachingInfo'])->name('showCoachingInfo');
-    Route::get('/admin/demande/{id}/show', [AdminController::class, 'showDemandeInfo'])->name('showDemandeInfo');
+    Route::get('/admin/coaching/{id}/demande-Info', [AdminController::class, 'showCoaching'])->name('showCoaching');
+
+    Route::get('/user/demande/{id}/show', [DemandeController::class, 'showDemande'])->name('showDemande');
+    Route::get('/user/coaching/{id}/show', [CoachingController::class, 'showCoaching'])->name('showCoaching');
 
     // edit user
     Route::get('/admin/user/{id}/edit', [AdminController::class, 'editUser'])->name('editUser');
     Route::get('/profile/user/{id}/edit', [UserController::class, 'editProfile'])->name('editProfile');
+    // create user 
+    Route::get('/create', [AdminController::class, 'create'])->name('create');
+    Route::post('/create/admin', [AdminController::class, 'createAdmin'])->name('createAdmin');
+
     // edit demande
     Route::get('/admin/demande/{id}/edit', [AdminController::class, 'editDemande'])->name('editDemande');
 

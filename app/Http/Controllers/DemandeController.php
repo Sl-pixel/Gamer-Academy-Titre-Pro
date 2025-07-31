@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -13,22 +11,21 @@ use \App\Models\Coaching;
 use \App\Models\Demande;
 use \App\Models\Game;
 
-
-class CoachingController extends Controller
+class DemandeController extends Controller
 {
-      public function showCoaching($id)
+  public function showDemande ($id)
     {
         // Retrieve the coaching session by ID
-        $coaching = Coaching::find($id);
+        $demande = Demande::find($id);
 
         // Check if the coaching session exists
-        if (!$coaching) {
+        if (!$demande) {
             abort(404, 'Coaching session not found');
         }
 
         // Retrieve the specific coach and student associated with the coaching session
-        $coach = User::find($coaching->coach_id);
-        $student = User::find($coaching->user_id);
+        $coach = User::find($demande->coach_id);
+        $student = User::find($demande->user_id);
 
         // Check if the coach and student exist
         if (!$coach || !$student) {
@@ -36,6 +33,6 @@ class CoachingController extends Controller
         }
 
         // Pass the coaching session, coach, and student to the view
-        return view('user.showCoaching', compact('coaching', 'coach', 'student'));
+        return view('user.showDemande', compact('demande', 'coach', 'student'));
     }
 }

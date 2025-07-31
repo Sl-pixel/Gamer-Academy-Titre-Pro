@@ -33,10 +33,7 @@
                         <img src="{{ $coach->profile_picture ? asset('storage/' . $coach->profile_picture) : asset('/images/default-avatar-profile.jpg')  }}" alt="Photo de {{ $coach->name }}"
                             class="w-40 h-40 rounded-full object-cover shadow-lg border-4 border-indigo-100 mb-4">
                         <h2 class="text-2xl font-bold text-indigo-800 mb-2 text-center">{{ $coach->name }}</h2>
-                        <div class="mt-4 text-center">
-                            <a href="{{ route('showUserInfo', $coach->id) }}"
-                                class="inline-block px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition duration-200">Voir Profile</a>
-                        </div>
+                       
                     </div>
                 </div>
                 <!-- Student Info -->
@@ -45,10 +42,7 @@
                         <img src="{{ $student->profile_picture ? asset('storage/' . $student->profile_picture) : asset('/images/default-avatar-profile.jpg')}}" alt="Photo de {{ $student->name }}"
                             class="w-40 h-40 rounded-full object-cover shadow-lg border-4 border-purple-100 mb-4">
                         <h2 class="text-2xl font-bold text-purple-800 mb-2 text-center">{{ $student->name }}</h2>
-                        <div class="mt-4 text-center">
-                            <a href="{{ route('showUserInfo', $student->id) }}"
-                                class="inline-block px-4 py-2 bg-purple-600 text-white rounded-lg shadow hover:bg-purple-700 transition duration-200">Voir Profile</a>
-                        </div>
+                     
                     </div>
                 </div>
             </div>
@@ -71,13 +65,7 @@ function goBack() {
     window.history.back(); // Retourne à la page précédente
 }
 </script>
-                <form method="POST" action="{{ route('destroyDemande', $demande->id) }}" class="inline"
-                                    onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce coaching ?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        class="inline-block px-4 py-2 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 transition duration-200">Supprimer</button>
-                </form>
+       
         </div>
     </div>
 </div>

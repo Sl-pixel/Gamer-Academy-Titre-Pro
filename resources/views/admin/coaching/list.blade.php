@@ -1,6 +1,13 @@
 @extends('layout')
 @section('title', 'Coaching List')
 @section('content')
+@if(session('success'))
+    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4">
+        <p class="font-bold">Succès</p>
+        <p>{{ session('success') }}</p>
+    </div>
+@endif
+
      <div class="container mx-auto p-6">
         <div class="flex justify-between items-center mb-8">
             <h1 class="text-4xl font-bold text-gray-900">Tableau des Coachings</h1>
