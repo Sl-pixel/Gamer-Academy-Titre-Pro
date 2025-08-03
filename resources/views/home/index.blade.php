@@ -6,6 +6,13 @@
 
 {{-- Section principale du contenu de la page --}}
 @section('content')
+@if(session('success'))
+    <div class="flex justify-center items-center">
+        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 w-full max-w-4xl mx-4" role="alert">
+            <p class="text-center">{{ session('success') }}</p>
+        </div>
+    </div>
+@endif
     <section
         class="flex flex-col items-center justify-center min-h-[600px] md:min-h-[800px] bg-gradient-to-br from-indigo-900 to-indigo-700 text-white py-24 px-4 rounded-lg shadow-lg mb-12 relative overflow-hidden"
         style="background-image: url('{{ asset($firstGame->image) }}'); background-size: cover; background-position: center;">
@@ -93,4 +100,51 @@
             </div>
         </div>
     </section>
+
+    <!-- Carrousel des notes -->
+    <section class="flex flex-col items-center justify-center py-12">
+        <h1 class="text-3xl md:text-4xl font-bold mb-10">Avis des élèves</h1>
+        @if(isset($notes) && count($notes))
+        <div id="carousel-notes" class="relative w-full max-w-2xl mx-auto">
+            <div class="overflow-hidden rounded-lg shadow-lg bg-white">
+                <div class="flex transition-transform duration-500" id="carousel-inner">
+                    @foreach($notes as $note)
+                        <div class="min-w-full flex flex-col items-center p-8 relative">
+                            <span class="absolute top-2 right-4 text-xs text-gray-400">{{ $note->created_at->format('d/m/Y') }}</span>
+                            <p class="text-gray-700 italic text-lg mb-4">"{{ $note->commentaire }}"</p>
+                            <div class="flex items-center">
+                                <span class="font-bold text-indigo-700 mr-2">{{ $note->student->name ?? 'Élève inconnu' }}</span>
+                                <span class="mx-2 text-gray-400">→</span>
+                                <span class="font-bold text-pink-600">{{ $note->coach->name ?? 'Coach inconnu' }}</span>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <button id="prev-btn" class="absolute left-0 top-1/2 -translate-y-1/2 bg-indigo-600 text-white px-3 py-2 rounded-full shadow hover:bg-indigo-700">&#8592;</button>
+            <button id="next-btn" class="absolute right-0 top-1/2 -translate-y-1/2 bg-indigo-600 text-white px-3 py-2 rounded-full shadow hover:bg-indigo-700">&#8594;</button>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const carouselInner = document.getElementById('carousel-inner');
+                const slides = carouselInner.children;
+                let current = 0;
+                function updateCarousel() {
+                    carouselInner.style.transform = `translateX(-${current * 100}%)`;
+                }
+                document.getElementById('prev-btn').onclick = function() {
+                    current = (current - 1 + slides.length) % slides.length;
+                    updateCarousel();
+                };
+                document.getElementById('next-btn').onclick = function() {
+                    current = (current + 1) % slides.length;
+                    updateCarousel();
+                };
+                updateCarousel();
+            });
+        </script>
+        @else
+            <p class="text-gray-500">Aucun avis pour le moment.</p>
+        @endif
+    </section> 
 @endsection

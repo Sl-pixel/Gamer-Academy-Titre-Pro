@@ -12,19 +12,12 @@
         <div class="flex justify-between items-center mb-8">
             <h1 class="text-4xl font-bold text-gray-900">Tableau des Demandes</h1>
             <div class="flex justify-end">
-                <div class="mt-6 flex justify-start space-x-4">
-                    <button onclick="goBack()" class="px-4 py-2 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-600 transition duration-300">
-                        Retour
-                    </button>
-                
-                </div>
-
-                <script>
-                    // Cette fonction utilise l'objet history de JavaScript pour revenir à la page précédente dans l'historique de navigation du navigateur.
-                    function goBack() {
-                        window.history.back(); // Retourne à la page précédente
-                    }
-                </script>
+            <div class="flex justify-end mt-4 md:mt-0">
+                <a href="{{ route('adminDashboard') }}"
+                    class="px-4 py-2 md:px-6 md:py-3 bg-indigo-600 text-white text-sm leading-5 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+                    Retour
+                </a>
+            </div>
             </div>
         </div>
         <div class="bg-white shadow-xl rounded-xl overflow-hidden">
@@ -62,7 +55,9 @@
                 </tbody>
             </table>
         </div>
-        <!-- <div class="mt-4">
-        </div> -->
+<div class="mt-6">
+        {{ $demandes->links('pagination::tailwind') }}
+        <!-- Affiche les liens de pagination en utilisant le style Tailwind -->
+    </div>
     </div>
 @endsection

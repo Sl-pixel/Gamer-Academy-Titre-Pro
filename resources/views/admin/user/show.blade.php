@@ -1,21 +1,38 @@
 @extends('layout')
+<!-- Étend le layout principal défini dans le fichier 'layout.blade.php' -->
 @section('title', 'Profil utilisateur')
+<!-- Définit le titre de la page -->
 @section('content')
+<!-- Section principale où le contenu de la page sera inséré -->
+
+<!-- Affichage du message de succès en dehors du conteneur principal -->
+@if(session('success'))
+    <div class="flex justify-center items-center">
+        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 w-full max-w-4xl mx-4" role="alert">
+            <p class="text-center">{{ session('success') }}</p>
+        </div>
+    </div>
+@endif
+
+<!-- Conteneur principal avec un fond gris clair et un rembourrage responsive -->
 <div class="flex justify-center items-center min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
     <div class="w-full max-w-4xl bg-white shadow-2xl rounded-2xl overflow-hidden">
+        <!-- Contenu de la fiche utilisateur -->
         <div class="flex flex-col lg:flex-row">
-            <!-- Profile Picture Column -->
+            <!-- Colonne pour la photo de profil -->
             <div class="flex flex-col items-center justify-center p-6 bg-indigo-600 lg:w-1/3">
-                <img src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('/images/default-avatar-profile.jpg') }}" alt="Photo de {{ $user->name }}"
+                <img src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('/images/default-avatar-profile.jpg') }}"
+                    alt="Photo de {{ $user->name }}"
                     class="w-40 h-40 rounded-full object-cover shadow-lg mb-4 border-4 border-white">
                 <span class="text-white font-bold text-xl capitalize">{{ $user->role }}</span>
             </div>
-            <!-- User Information Column -->
+            <!-- Colonne pour les informations de l'utilisateur -->
             <div class="p-8 lg:w-2/3 w-full">
                 <div>
                     <h2 class="text-3xl font-extrabold text-gray-900">{{ $user->name }}</h2>
                     <p class="text-sm text-gray-500 mt-1">ID : <span class="font-medium">{{ $user->id }}</span></p>
                 </div>
+                <!-- Section pour les informations de base de l'utilisateur -->
                 <div class="mt-6 border-t-2 border-gray-200 pt-6 text-base text-gray-600 space-y-3">
                     <p><span class="font-semibold text-gray-900">Email :</span> <a href="mailto:{{ $user->email }}"
                             class="text-indigo-600 hover:text-indigo-800 transition duration-300">{{ $user->email }}</a></p>
@@ -25,9 +42,8 @@
                     <p><span class="font-semibold text-gray-900">Dernière mise à jour :</span>
                         {{ $user->updated_at->format('d/m/Y \à H:i') }}</p>
                 </div>
-
+                <!-- Section spécifique pour les coachs -->
                 @if($user->role === 'coach')
-                    <!-- Game Section -->
                     @if(isset($user->game))
                         <div class="mt-6 border-t-2 border-gray-200 pt-6">
                             <h3 class="text-xl font-bold text-gray-900 mb-4">{{ $user->game->name }}</h3>
@@ -36,8 +52,6 @@
                             </div>
                         </div>
                     @endif
-
-                    <!-- Coaching Sessions Section -->
                     <div class="mt-6 border-t-2 border-gray-200 pt-6">
                         <h3 class="text-xl font-bold text-gray-900 mb-4">Sessions de Coaching</h3>
                         @if($user->coachings && $user->coachings->isNotEmpty())
@@ -59,9 +73,7 @@
                         @endif
                     </div>
                 @endif
-
                 @if($user->role === 'student')
-                    <!-- Coaching Sessions Section -->
                     <div class="mt-6 border-t-2 border-gray-200 pt-6">
                         <h3 class="text-xl font-bold text-gray-900 mb-4">Sessions de Coaching</h3>
                         @if($user->coachings && $user->coachings->isNotEmpty())
@@ -82,8 +94,6 @@
                             <p class="text-gray-700">Aucune session de coaching trouvée.</p>
                         @endif
                     </div>
-
-                    <!-- Demandes Section -->
                     <div class="mt-6 border-t-2 border-gray-200 pt-6">
                         <h3 class="text-xl font-bold text-gray-900 mb-4">Demandes</h3>
                         @if($user->demandes && $user->demandes->isNotEmpty())
@@ -105,8 +115,6 @@
                         @endif
                     </div>
                 @endif
-
-                <!-- Notes Section -->
                 <div class="mt-6 border-t-2 border-gray-200 pt-6">
                     <h3 class="text-xl font-bold text-gray-900 mb-4">Notes</h3>
                     <a href="{{ route('showNotes', $user->id) }}"
@@ -114,24 +122,19 @@
                         Afficher les Notes
                     </a>
                 </div>
-
-                <!-- Navigation Buttons -->
                 <div class="mt-6 flex justify-start space-x-4">
-    <button onclick="goBack()" class="px-4 py-2 bg-indigo-500 text-white rounded-lg shadow hover:bg-indigo-600 transition duration-300">
-        Retour
-    </button>
-    <a href="{{ route('editUser', $user->id) }}" class="px-4 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition duration-300">
-        Modifier
-    </a>
-</div>
-
-<script>
-    // Cette fonction utilise l'objet history de JavaScript pour revenir à la page précédente dans l'historique de navigation du navigateur.
-    function goBack() {
-        window.history.back(); // Retourne à la page précédente
-    }
-</script>
-
+                    <button onclick="goBack()" class="px-4 py-2 bg-indigo-500 text-white rounded-lg shadow hover:bg-indigo-600 transition duration-300">
+                        Retour
+                    </button>
+                    <a href="{{ route('editUser', $user->id) }}" class="px-4 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition duration-300">
+                        Modifier
+                    </a>
+                </div>
+                <script>
+                    function goBack() {
+                        window.history.back();
+                    }
+                </script>
             </div>
         </div>
     </div>

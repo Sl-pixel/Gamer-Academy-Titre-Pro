@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('revenues', function (Blueprint $table) {
             $table->id(); // Identifiant unique pour chaque entrée de revenu
-            $table->unsignedBigInteger('user_id'); // Identifiant de l'utilisateur (coach) associé au revenu
+            $table->unsignedBigInteger('coach_id'); // Identifiant de l'utilisateur (coach) associé au revenu
             $table->decimal('amount', 8, 2); // Montant du revenu
             $table->date('date'); // Date du revenu
             $table->timestamps(); // Colonnes created_at et updated_at
 
             // Définir une clé étrangère pour lier chaque revenu à un utilisateur
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('coach_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

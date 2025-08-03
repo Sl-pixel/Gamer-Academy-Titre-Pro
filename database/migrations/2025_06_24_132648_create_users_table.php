@@ -18,13 +18,13 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('discord')->unique()->nullable();
             $table->string('password');
-            $table->string('notes')->nullable();
             $table->string('rank')->nullable();
             $table->string('tarif')->nullable();
             $table->unsignedBigInteger('game_id')->nullable();
             $table->enum('role', ['admin', 'coach', 'student'])->default('student');
             $table->string('profile_picture')->nullable();
             $table->string('biographie')->nullable();
+            $table->string('availability')->nullable();
             $table->timestamps();
 
             $table->foreign('game_id')->references('id')->on('games')->onDelete('set null');

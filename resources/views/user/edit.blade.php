@@ -101,18 +101,27 @@
                             <label for="name" class="block text-gray-700 text-sm font-medium mb-1">Nom</label>
                             <input type="text" name="name" id="name" value="{{ $user->name }}"
                                 class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                            @error('name')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div>
                             <label for="email" class="block text-gray-700 text-sm font-medium mb-1">Email</label>
                             <input type="email" name="email" id="email" value="{{ $user->email }}"
                                 class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                            @error('email')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div>
                             <label for="discord" class="block text-gray-700 text-sm font-medium mb-1">Discord</label>
                             <input type="text" name="discord" id="discord" value="{{ $user->discord }}"
                                 class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                            @error('discord')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div>
@@ -120,6 +129,9 @@
                             <input type="password" name="password" id="password"
                                 placeholder="Laisser vide pour ne pas changer"
                                 class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                            @error('password')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div class="text-sm text-gray-500">

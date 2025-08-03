@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -13,26 +14,27 @@ use \App\Models\Game;
 
 class DemandeController extends Controller
 {
-  public function showDemande ($id)
+    // Affiche les détails d'une demande de coaching spécifique
+    public function showDemande($id)
     {
-        // Retrieve the coaching session by ID
+        // Récupère la demande de coaching par son identifiant
         $demande = Demande::find($id);
 
-        // Check if the coaching session exists
+        // Vérifie si la demande de coaching existe
         if (!$demande) {
-            abort(404, 'Coaching session not found');
+            abort(404, 'Session de coaching non trouvée'); // Retourne une erreur 404 si la demande n'est pas trouvée
         }
 
-        // Retrieve the specific coach and student associated with the coaching session
+        // Récupère le coach et l'étudiant spécifiques associés à la demande de coaching
         $coach = User::find($demande->coach_id);
         $student = User::find($demande->user_id);
 
-        // Check if the coach and student exist
+        // Vérifie si le coach et l'étudiant existent
         if (!$coach || !$student) {
-            abort(404, 'Coach or student not found');
+            abort(404, 'Coach ou étudiant non trouvé'); // Retourne une erreur 404 si le coach ou l'étudiant n'est pas trouvé
         }
 
-        // Pass the coaching session, coach, and student to the view
+        // Passe la demande de coaching, le coach et l'étudiant à la vue
         return view('user.showDemande', compact('demande', 'coach', 'student'));
     }
 }

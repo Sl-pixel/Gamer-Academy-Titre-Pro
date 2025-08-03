@@ -9,56 +9,32 @@ use App\Http\Controllers\DemandeController;
 use App\Http\Controllers\CoachingController;
 use App\Http\Controllers\UserController; 
 
-
+// Authentication routes
 Route::post('/login', [AuthController::class, 'loginUser'])->name('loginUser');
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/register', [AuthController::class, 'registerForm'])->name('registerForm');
 Route::post('/doRegisterUser', [AuthController::class, 'registerUser'])->name('registerUser');
 // logout
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-
 Route::get('/contact', [HomeController::class, 'contactForm'])->name('contact');
-// Route::get('/discord', [HomeController::class, 'discord'])->name('discord');
-
+Route::get('/discord', [HomeController::class, 'discord'])->name('discord');
 // home
 Route::get('/', [HomeController::class, 'showGame'])->name('index');
-
 // choix jeux
 Route::get('/games/{slug}', [HomeController::class, 'showGame'])->name('showGame');
-
 // affichage coach
 Route::get('/games/{game}/coaches', [UserController::class, 'showCoaches'])->name('showCoaches');
-// selec 
-
+// select coach
 Route::get('/selectCoach/{id}', [UserController::class, 'selectCoach'])->name('selectCoach');
-// delete user
-Route::delete('/admin/user/{id}/delete', [AdminController::class, 'destroyUser'])->name('destroyUser');
-// delete coaching
-Route::delete('/admin/coaching/{id}/delete', [AdminController::class, 'destroyCoaching'])->name('destroyCoaching');
-// delete note
-Route::delete('/admin/note/{id}/delete', [AdminController::class, 'destroyNote'])->name('destroyNote');
-// delete demandes
-Route::delete('/admin/demandes/{id}/delete', [AdminController::class, 'destroyDemande'])->name('destroyDemande');
-// update user
-Route::put('/admin/user/{id}/update', [AdminController::class, 'updateUser'])->name('updateUser');
-
-// update role
-Route::put('/users/{id}/update-role-only', [AdminController::class, 'updateRoleOnly'])->name('user.updateRoleOnly');
-Route::put('/admin/coaching/{id}/update', [AdminController::class, 'updateStatusOnly'])->name('updateStatusOnly');
-
-// update
-Route::put('/admin/dashboard/{id}/update-biographie', [CoachController::class, 'updateCoachBio'])->name('updateCoachBio');
-Route::put('/admin/dashboard/{id}/update-tarif', [CoachController::class, 'updateCoachTarif'])->name('updateCoachTarif');
-Route::put('/user/{user}/update-game', [UserController::class, 'updateGame'])->name('user.updateGame');
-
-// show
-
-// gestion du status des demandes
-Route::put('/demande/{id}/traiter', [CoachController::class, 'traiterDemande'])->name('demande.traiter');
-
-Route::put('/user/{id}/calendly', [UserController::class, 'updateCalendlyUrl'])->name('updateCalendlyUrl');
+Route::get('/demande/coaching/{id}', [UserController::class, 'demanderCoaching'])->name('demanderCoaching');
 
 Route::middleware(['auth'])->group(function () {
+    // Route pour afficher le formulaire de disponibilités
+    Route::get('/coach/{id}/availability', [CoachController::class, 'showAvailabilityForm'])->name('showAvailabilityForm');
+
+    // Route pour mettre à jour les disponibilités du coach (protégée par auth)
+    Route::post('/coach/{id}/availability', [CoachController::class, 'updateAvailability'])->name('updateAvailability');
+
     Route::get('/coach/show/demandes/{id}', [CoachController::class, 'showDemandeCoach'])->name('showDemandeCoach');
     // show list admin
     Route::get('/students', [AdminController::class, 'showList'])->name('student.list')->defaults('type', 'student');
@@ -72,8 +48,9 @@ Route::middleware(['auth'])->group(function () {
     // fiche user
     Route::get('/admin/user/{id}/user-Info', [AdminController::class, 'showUserInfo'])->name('showUserInfo');
     Route::get('/admin/user/{id}/show-Notes', [AdminController::class, 'showNotes'])->name('showNotes');
+    // show coaching and demande info
     Route::get('/admin/coaching/{id}/coaching-Info', [AdminController::class, 'showCoachingInfo'])->name('showCoachingInfo');
-    Route::get('/admin/coaching/{id}/demande-Info', [AdminController::class, 'showCoaching'])->name('showCoaching');
+    Route::get('/admin/demande/{id}/demande-Info', [AdminController::class, 'showDemandeInfo'])->name('showDemandeInfo');
 
     Route::get('/user/demande/{id}/show', [DemandeController::class, 'showDemande'])->name('showDemande');
     Route::get('/user/coaching/{id}/show', [CoachingController::class, 'showCoaching'])->name('showCoaching');
@@ -81,7 +58,9 @@ Route::middleware(['auth'])->group(function () {
     // edit user
     Route::get('/admin/user/{id}/edit', [AdminController::class, 'editUser'])->name('editUser');
     Route::get('/profile/user/{id}/edit', [UserController::class, 'editProfile'])->name('editProfile');
-    // create user 
+    Route::put('/admin/user/{id}/update', [AdminController::class, 'updateUser'])->name('updateUser');
+
+    // create 
     Route::get('/create', [AdminController::class, 'create'])->name('create');
     Route::post('/create/admin', [AdminController::class, 'createAdmin'])->name('createAdmin');
 
@@ -92,6 +71,24 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/coaching/{id}/edit', [AdminController::class, 'editCoaching'])->name('editCoaching');
     Route::get('/admin/coaching/{id}/update', [AdminController::class, 'updateCoaching'])->name('updateCoaching');   
 
+
+    // delete 
+    Route::delete('/admin/user/{id}/delete', [AdminController::class, 'destroyUser'])->name('destroyUser');
+    Route::delete('/admin/coaching/{id}/delete', [AdminController::class, 'destroyCoaching'])->name('destroyCoaching');
+    Route::delete('/admin/note/{id}/delete', [AdminController::class, 'destroyNote'])->name('destroyNote');
+    Route::delete('/admin/demandes/{id}/delete', [AdminController::class, 'destroyDemande'])->name('destroyDemande');
+  
+    // update 
+    Route::put('/users/{id}/update-role-only', [AdminController::class, 'updateRoleOnly'])->name('user.updateRoleOnly');
+    Route::put('/admin/coaching/{id}/update', [AdminController::class, 'updateStatusOnly'])->name('updateStatusOnly');
+
+    // update coach
+    Route::put('/coach/dashboard/{id}/update-biographie', [CoachController::class, 'updateCoachBio'])->name('updateCoachBio');
+    Route::put('/coach/dashboard/{id}/update-tarif', [CoachController::class, 'updateCoachTarif'])->name('updateCoachTarif');
+    Route::put('/user/{user}/update-game', [UserController::class, 'updateGame'])->name('user.updateGame');
+    
+    // gestion du status des demandes
+    Route::put('/demande/{id}/traiter', [CoachController::class, 'traiterDemande'])->name('demande.traiter');
 });
 
 Route::get('/404', function () {

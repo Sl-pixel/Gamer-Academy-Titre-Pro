@@ -80,5 +80,6 @@ function goBack() {
                 </form>
         </div>
     </div>
+    
 </div>
 @endsection

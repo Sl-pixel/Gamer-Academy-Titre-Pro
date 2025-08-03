@@ -38,6 +38,12 @@ class UserTableSeeder extends Seeder
         // Create coaches
         for ($i = 1; $i <= 12; $i++) {
             $gameId = ($i - 1) % count($games) + 1;
+            // Créneaux de disponibilité fictifs pour chaque coach
+            $availability = [
+                'Lundi 18:00-20:00',
+                'Mercredi 14:00-16:00',
+                'Samedi 10:00-12:00'
+            ];
             $coaches[] = [
                 'name' => 'Coach ' . $i,
                 'email' => 'coach' . $i . '@example.com',
@@ -47,6 +53,7 @@ class UserTableSeeder extends Seeder
                 'tarif' => rand(10, 30),
                 'game_id' => $gameId,
                 'biographie' => 'This is the biography of Coach ' . $i . '. With expertise in ' . $games[$gameId] . ', Coach ' . $i . ' is dedicated to helping players improve their skills and achieve their goals in the game.',
+                'availability' => json_encode($availability),
                 'created_at' => now(),
                 'updated_at' => now()
             ];
@@ -90,8 +97,8 @@ class UserTableSeeder extends Seeder
                 if (!in_array($randomCoach->id, $assignedCoachIds)) {
                     DB::table('notes')->insert([
                         'coach_id' => $randomCoach->id,
-                        'student_id' => $student->id,
-                        'notes' => 'Commentaire pour le coach ' . $randomCoach->name . ' de la part de l\'étudiant ' . $student->name,
+                        'user_id' => $student->id,
+                        'commentaire' => 'Commentaire pour le coach ' . $randomCoach->name . ' de la part de l\'étudiant ' . $student->name,
                         'created_at' => now(),
                         'updated_at' => now()
                     ]);

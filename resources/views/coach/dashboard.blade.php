@@ -3,6 +3,11 @@
 @section('title', 'Coach Dashboard')
 
 @section('content')
+    <div class="flex justify-end mb-4">
+        <a href="{{ route('showAvailabilityForm', $user->id) }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
+            Modifier mes disponibilités
+        </a>
+    </div>
     <div class="container mx-auto p-4">
         <!-- Section Profil -->
         <div class="bg-white p-6 mb-6 rounded-lg shadow-md">
@@ -92,8 +97,7 @@
             </div>
         </form>
 
-        <!-- Calendrier FullCalendar -->
-        <div class="mt-6">
+
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <h2 class="text-xl font-bold text-gray-800 mb-4">Calendrier</h2>
                 <div id='calendar' class="w-full"></div>
@@ -158,7 +162,9 @@
                     day: 'Jour'
                 },
                 locale: 'fr',
-                events: @json($events) // Passez les événements ici
+                events: @json(array_merge($events->toArray(), $availabilityEvents)), // Coachings + disponibilités
+                slotMinTime: '10:00:00',
+                slotMaxTime: '23:59:00',
             });
             calendar.render();
         });

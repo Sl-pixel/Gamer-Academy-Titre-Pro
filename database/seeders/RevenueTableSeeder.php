@@ -26,7 +26,7 @@ class RevenueTableSeeder extends Seeder
             $currentDate = $startDate->copy();
             while ($currentDate->lte($endDate)) {
                 Revenue::create([
-                    'user_id' => $coach->id,
+                    'coach_id' => $coach->id,
                     'amount' => rand(50, 500), // Montant aléatoire entre 50 et 500
                     'date' => $currentDate->toDateString(), // Date pour chaque jour de l'année
                     'created_at' => now(),

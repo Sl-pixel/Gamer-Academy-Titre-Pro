@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
@@ -13,29 +12,29 @@ use \App\Models\Coaching;
 use \App\Models\Demande;
 use \App\Models\Game;
 
-
 class CoachingController extends Controller
 {
-      public function showCoaching($id)
+    // Affiche les détails d'une session de coaching spécifique
+    public function showCoaching($id)
     {
-        // Retrieve the coaching session by ID
+        // Récupère la session de coaching par son identifiant
         $coaching = Coaching::find($id);
 
-        // Check if the coaching session exists
+        // Vérifie si la session de coaching existe
         if (!$coaching) {
-            abort(404, 'Coaching session not found');
+            abort(404, 'Session de coaching non trouvée'); // Retourne une erreur 404 si la session n'est pas trouvée
         }
 
-        // Retrieve the specific coach and student associated with the coaching session
+        // Récupère le coach et l'étudiant spécifiques associés à la session de coaching
         $coach = User::find($coaching->coach_id);
         $student = User::find($coaching->user_id);
 
-        // Check if the coach and student exist
+        // Vérifie si le coach et l'étudiant existent
         if (!$coach || !$student) {
-            abort(404, 'Coach or student not found');
+            abort(404, 'Coach ou étudiant non trouvé'); // Retourne une erreur 404 si le coach ou l'étudiant n'est pas trouvé
         }
 
-        // Pass the coaching session, coach, and student to the view
+        // Passe la session de coaching, le coach et l'étudiant à la vue
         return view('user.showCoaching', compact('coaching', 'coach', 'student'));
     }
 }

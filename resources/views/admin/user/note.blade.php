@@ -1,14 +1,25 @@
 @extends('layout')
+<!-- Étend le layout principal défini dans le fichier 'layout.blade.php' -->
+
 @section('title', 'Notes')
+<!-- Définit le titre de la page -->
+
 @section('content')
+<!-- Section principale où le contenu de la page sera inséré -->
 <div class="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray to-indigo py-12 px-4 sm:px-6 lg:px-8">
+    <!-- Conteneur principal avec un fond dégradé et un rembourrage responsive -->
     <div class="w-full max-w-3xl bg-white shadow-2xl rounded-2xl overflow-hidden p-6">
+        <!-- Boîte avec fond blanc, ombre, coins arrondis et rembourrage -->
+
+        <!-- En-tête de la page avec une icône et un titre -->
         <div class="flex items-center mb-8">
             <svg class="w-10 h-10 text-indigo-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
             </svg>
             <h1 class="text-3xl font-bold text-gray-900">Notes</h1>
         </div>
+
+        <!-- Section pour les coachs : affiche les notes des étudiants -->
         @if($user->role === 'coach')
             <div class="flex items-center mb-6">
                 <svg class="w-7 h-7 text-indigo-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -16,10 +27,14 @@
                 </svg>
                 <h2 class="text-2xl font-semibold text-gray-800">Notes des étudiants</h2>
             </div>
+
+            <!-- Vérifie s'il y a des étudiants avec des notes -->
             @if($user->students->isNotEmpty())
                 <div class="space-y-5">
+                    <!-- Boucle à travers chaque étudiant -->
                     @foreach($user->students as $student)
                         <div class="bg-gray-50 p-5 rounded-xl shadow transition duration-300 ease-in-out hover:shadow-lg">
+                            <!-- Affiche les informations de l'étudiant et ses notes -->
                             <div class="flex justify-between items-center">
                                 <div class="flex items-center">
                                     <svg class="w-6 h-6 text-indigo-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -27,6 +42,7 @@
                                     </svg>
                                     <h3 class="font-semibold text-xl text-gray-900">{{ $student->name }}</h3>
                                 </div>
+                                <!-- Formulaire pour supprimer la note -->
                                 <form method="POST" action="{{ route('destroyNote', $student->pivot->id) }}" class="inline" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette note ?');">
                                     @csrf
                                     @method('DELETE')
@@ -43,10 +59,12 @@
                     @endforeach
                 </div>
             @else
+                <!-- Message si aucun étudiant n'a de notes -->
                 <p class="text-gray-600 text-center py-4">Aucune note des étudiants pour le moment.</p>
             @endif
         @endif
 
+        <!-- Section pour les étudiants : affiche les notes des entraîneurs -->
         @if($user->role === 'student')
             <div class="flex items-center mb-6">
                 <svg class="w-7 h-7 text-indigo-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -54,10 +72,13 @@
                 </svg>
                 <h2 class="text-2xl font-semibold text-gray-800">Notes pour les entraîneurs</h2>
             </div>
+            <!-- Vérifie s'il y a des entraîneurs avec des notes -->
             @if($user->coaches->isNotEmpty())
                 <div class="space-y-5">
+                    <!-- Boucle à travers chaque entraîneur -->
                     @foreach($user->coaches as $coach)
                         <div class="bg-gray-50 p-5 rounded-xl shadow transition duration-300 ease-in-out hover:shadow-lg">
+                            <!-- Affiche les informations de l'entraîneur et ses notes -->
                             <div class="flex justify-between items-center">
                                 <div class="flex items-center">
                                     <svg class="w-6 h-6 text-indigo-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -65,6 +86,7 @@
                                     </svg>
                                     <h3 class="font-semibold text-xl text-gray-900">{{ $coach->name }}</h3>
                                 </div>
+                                <!-- Formulaire pour supprimer la note -->
                                 <form method="POST" action="{{ route('destroyNote', $coach->pivot->id) }}" class="inline" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette note ?');">
                                     @csrf
                                     @method('DELETE')
@@ -81,23 +103,24 @@
                     @endforeach
                 </div>
             @else
+                <!-- Message si aucun entraîneur n'a de notes -->
                 <p class="text-gray-600 text-center py-4">Aucune note pour les entraîneurs pour le moment.</p>
             @endif
         @endif
 
+        <!-- Bouton pour revenir à la page précédente -->
         <div class="mt-8 flex justify-start">
-                    <div class="mt-6 flex justify-start space-x-4">
-                        <button onclick="goBack()" class="px-4 py-2 bg-indigo-500 text-white rounded-lg shadow hover:bg-indigo-600 transition duration-300">
-                            Retour
-                        </button>
-                    </div>
-
-                    <script>
-                        // Cette fonction utilise l'objet history de JavaScript pour revenir à la page précédente dans l'historique de navigation du navigateur.
-                        function goBack() {
-                            window.history.back(); // Retourne à la page précédente
-                        }
-                    </script>
+            <div class="mt-6 flex justify-start space-x-4">
+                <button onclick="goBack()" class="px-4 py-2 bg-indigo-500 text-white rounded-lg shadow hover:bg-indigo-600 transition duration-300">
+                    Retour
+                </button>
+            </div>
+            <!-- Script JavaScript pour revenir en arrière dans l'historique du navigateur -->
+            <script>
+                function goBack() {
+                    window.history.back(); // Retourne à la page précédente
+                }
+            </script>
         </div>
     </div>
 </div>
