@@ -54,7 +54,7 @@
                                     </button>
                                 </form>
                             </div>
-                            <p class="mt-3 text-gray-700">{{ $student->pivot->notes }}</p>
+                            <p class="mt-3 text-gray-700">{{ $student->pivot->commentaire }}</p>
                         </div>
                     @endforeach
                 </div>
@@ -98,7 +98,7 @@
                                     </button>
                                 </form>
                             </div>
-                            <p class="mt-3 text-gray-700">{{ $coach->pivot->notes }}</p>
+                            <p class="mt-3 text-gray-700">{{ $coach->pivot->commentaire }}</p>
                         </div>
                     @endforeach
                 </div>

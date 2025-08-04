@@ -29,18 +29,29 @@ class CoachController extends Controller
         // Récupère les demandes de coaching pour le coach
         $demandes = $user->demandesCoaching()->get();
 
-        // Récupère les coachings à venir pour le coach
-        $coachingIncoming = $user->coachings()->get();
+        // Récupère les coachings à venir pour le coach (statut accepted et dans la semaine en cours)
+        $startOfWeek = now()->startOfWeek(); // Début de la semaine (lundi)
+        $endOfWeek = now()->endOfWeek();     // Fin de la semaine (dimanche)
+        
+        $coachingIncoming = Coaching::where('coach_id', $user->id)
+            ->where('status', 'accepted')
+            ->whereBetween('date_coaching', [$startOfWeek, $endOfWeek])
+            ->where('date_coaching', '>=', now()) // Seulement les coachings à partir de maintenant
+            ->with(['user', 'game']) // Charge les relations
+            ->orderBy('date_coaching', 'asc')
+            ->get();
 
         // Récupère les coachings passés pour le coach
         $coachingPast = Coaching::where('coach_id', $user->id)
+            ->where('status', 'accepted')
             ->where('date_coaching', '<', now())
+            ->with(['user', 'game']) // Charge les relations
             ->get();
 
         // Fusionne les coachings à venir et passés
         $allCoachings = $coachingIncoming->concat($coachingPast);
 
-        // Formate les événements pour FullCalendar
+        // Formate les événements pour FullCalendar (tous les coachings acceptés)
         $events = $allCoachings->map(function ($coaching) {
             return [
                 'title' => 'Coaching avec ' . $coaching->user->name,
@@ -176,12 +187,14 @@ class CoachController extends Controller
 
             if ($action === 'accept') {
                 // Si la demande est acceptée, crée un coaching ou le met à jour
+                $coach = User::findOrFail($demande->coach_id);
+                
                 Coaching::firstOrCreate(
                     ['demande_id' => $demande->id],
                     [
                         'user_id' => $demande->user_id,
                         'coach_id' => $demande->coach_id,
-                        'game_id' => $demande->game_id,
+                        'game_id' => $coach->game_id, // Utilise le game_id du coach
                         'date_coaching' => $demande->date_coaching,
                         'duree' => $demande->duree,
                         'commentaires' => $demande->message,

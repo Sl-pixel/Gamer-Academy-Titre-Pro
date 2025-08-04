@@ -43,6 +43,12 @@ class Coaching extends Model
         return $this->belongsTo(Game::class, 'game_id', 'id');
     }
 
+    // Alias pour la relation jeu (pour plus de cohérence)
+    public function game()
+    {
+        return $this->belongsTo(Game::class, 'game_id', 'id');
+    }
+
     // Définit une relation "un à plusieurs" avec le modèle Note pour les notes associées
     public function notes()
     {

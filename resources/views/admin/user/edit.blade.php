@@ -8,7 +8,7 @@
     <!-- Conteneur principal de la fenêtre -->
     <div class="w-full max-w-4xl bg-white rounded-2xl shadow-md p-8">
 
-        <h2 class="text-3xl font-bold text-center text-indigo-700 mb-8">Modifier le profil utilisateur</h2>
+        <h2 class="text-3xl font-bold text-center text-indigo-700 mb-8">Modifier le profil de {{ $user->name }}</h2>
         <!-- Titre de la page -->
 
         <div class="flex flex-col md:flex-row gap-6">

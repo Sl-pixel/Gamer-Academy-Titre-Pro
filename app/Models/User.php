@@ -58,10 +58,15 @@ class User extends Authenticatable
         return $this->belongsTo(Game::class, 'game_id', 'id');
     }
 
-    // Définit une relation "un à plusieurs" avec le modèle Demande pour les demandes de coaching
+    // Définit une relation "un à plusieurs" avec le modèle Demande pour les demandes de coaching faites par cet utilisateur
     public function demandesCoaching()
     {
-        return $this->hasMany(Demande::class, 'coach_id', 'id'); 
+        if ($this->role === 'coach') {
+            // Si l'utilisateur est un coach, retourne les demandes adressées à ce coach
+            return $this->hasMany(Demande::class, 'coach_id', 'id');
+        }
+        // Pour les étudiants, retourne les demandes faites par cet étudiant
+        return $this->hasMany(Demande::class, 'user_id', 'id'); 
     }
 
     // Définit une relation "un à plusieurs" avec le modèle Demande
@@ -73,16 +78,16 @@ class User extends Authenticatable
     // Définit une relation "plusieurs à plusieurs" avec le modèle User pour les étudiants
     public function students()
     {
-        return $this->belongsToMany(User::class, 'notes', 'coach_id', 'student_id')
-            ->withPivot('id', 'notes')
+        return $this->belongsToMany(User::class, 'notes', 'coach_id', 'user_id')
+            ->withPivot('id', 'commentaire')
             ->where('users.role', 'student');
     }
 
     // Définit une relation "plusieurs à plusieurs" avec le modèle User pour les coachs
     public function coaches()
     {
-        return $this->belongsToMany(User::class, 'notes', 'student_id', 'coach_id')
-            ->withPivot('id', 'notes')
+        return $this->belongsToMany(User::class, 'notes', 'user_id', 'coach_id')
+            ->withPivot('id', 'commentaire')
             ->where('users.role', 'coach');
     }
 

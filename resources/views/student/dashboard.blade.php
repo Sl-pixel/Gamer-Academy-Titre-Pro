@@ -46,7 +46,7 @@
                         class="font-bold">{{ $demandes->where('status', 'pending')->count() }}</span></p>
                 <button
                     class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
-                    <a href="{{-- route('showDemandeEleve', $user->id)--}}">Voir mes demandes</a>
+                    <a href="{{ route('showStudentDemandes', $user->id) }}">Voir mes demandes</a>
                 </button>
             </div>
         </div>

@@ -36,6 +36,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/coach/{id}/availability', [CoachController::class, 'updateAvailability'])->name('updateAvailability');
 
     Route::get('/coach/show/demandes/{id}', [CoachController::class, 'showDemandeCoach'])->name('showDemandeCoach');
+    
+    // Route pour afficher les demandes d'un étudiant
+    Route::get('/student/demandes/{user}', [UserController::class, 'showStudentDemandes'])->name('showStudentDemandes');
+    
+    // Route pour annuler une demande de coaching
+    Route::delete('/demande/{id}/cancel', [UserController::class, 'cancelDemande'])->name('demande.cancel');
+    
     // show list admin
     Route::get('/students', [AdminController::class, 'showList'])->name('student.list')->defaults('type', 'student');
     Route::get('/coaches', [AdminController::class, 'showList'])->name('coach.list')->defaults('type', 'coach');

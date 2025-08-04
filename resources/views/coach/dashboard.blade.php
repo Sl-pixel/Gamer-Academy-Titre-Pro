@@ -104,7 +104,7 @@
             </div>
         </div>
 
-        <!-- Coaching à Venir -->
+        <!-- Coaching à Venir de la Semaine -->
         <div class="mt-6">
             <div class="bg-gray-100 p-6 rounded-lg shadow-md">
                 <div class="flex items-center">
@@ -113,9 +113,9 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    <h2 class="text-xl font-bold text-gray-800">Coaching à Venir</h2>
+                    <h2 class="text-xl font-bold text-gray-800">Coachings de cette semaine</h2>
                 </div>
-                @foreach ($coachingIncoming as $coaching)
+                @forelse ($coachingIncoming as $coaching)
                     <ul class="mt-4 space-y-3">
                         <li class="p-4 bg-white rounded-lg shadow-sm">
                             <div class="flex items-center">
@@ -127,7 +127,7 @@
                                 </svg>
                                 <div>
                                     <p class="font-semibold text-gray-700">Élève : <span class="font-normal">{{ $coaching->user->name }}</span></p>
-                                    <p class="text-sm text-gray-500">Date : {{ $coaching->date_coaching }}</p>
+                                    <p class="text-sm text-gray-500">Date : {{ \Carbon\Carbon::parse($coaching->date_coaching)->format('d/m/Y à H:i') }}</p>
                                     @if($coaching->game)
                                         <p class="text-sm text-gray-500">Jeu : {{ $coaching->game->name }}</p>
                                     @endif
@@ -138,7 +138,11 @@
                             </div>
                         </li>
                     </ul>
-                @endforeach
+                @empty
+                    <div class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                        <p class="text-gray-600 text-center">Aucun coaching prévu cette semaine.</p>
+                    </div>
+                @endforelse
             </div>
         </div>
 

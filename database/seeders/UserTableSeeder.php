@@ -15,10 +15,36 @@ class UserTableSeeder extends Seeder
         DB::table('users')->delete();
         DB::table('notes')->delete(); // Clear existing notes if any
 
-        // Insert admin
+        // Noms aléatoires pour les utilisateurs
+        $firstNames = [
+            'Alexandre', 'Baptiste', 'Camille', 'Damien', 'Emma', 'Florian', 'Gabrielle', 'Hugo',
+            'Inès', 'Julien', 'Karine', 'Lucas', 'Marie', 'Nathan', 'Océane', 'Pierre',
+            'Quentin', 'Romane', 'Sophie', 'Thomas', 'Valentin', 'William', 'Xavier', 'Yasmine', 'Zoé'
+        ];
+        
+        $lastNames = [
+            'Dupont', 'Martin', 'Bernard', 'Dubois', 'Thomas', 'Robert', 'Petit', 'Durand',
+            'Leroy', 'Moreau', 'Simon', 'Laurent', 'Lefebvre', 'Michel', 'Garcia', 'David',
+            'Bertrand', 'Roux', 'Vincent', 'Fournier', 'Morel', 'Girard', 'André', 'Lefèvre', 'Mercier'
+        ];
+
+        $gamingPrefixes = [
+            'Pro', 'Dark', 'Shadow', 'Elite', 'Cyber', 'Neon', 'Alpha', 'Beta', 'Omega', 'Nova',
+            'Pixel', 'Storm', 'Fire', 'Ice', 'Lightning', 'Dragon', 'Phoenix', 'Viper', 'Wolf', 'Eagle'
+        ];
+
+        $gamingSuffixes = [
+            'Gaming', 'Pro', 'Master', 'King', 'Queen', 'Slayer', 'Hunter', 'Warrior', 'Legend', 'Hero',
+            'God', 'Ace', 'Sniper', 'Ninja', 'Wizard', 'Beast', 'Killer', 'Champion', 'Boss', 'Elite'
+        ];
+
+        // Insert admin with random name
+        $adminFirstName = $firstNames[array_rand($firstNames)];
+        $adminLastName = $lastNames[array_rand($lastNames)];
         DB::table('users')->insert([
-            'name' => 'Admin',
-            'email' => 'admin@example.com',
+            'name' => $adminFirstName . ' ' . $adminLastName,
+            'email' => strtolower($adminFirstName . '.' . $adminLastName . '@gameracademy.com'),
+            'discord' => $adminFirstName . '#' . rand(1000, 9999),
             'password' => Hash::make('password'),
             'role' => 'admin',
             'created_at' => now(),
@@ -36,8 +62,21 @@ class UserTableSeeder extends Seeder
         $students = [];
 
         // Create coaches
+        $usedNames = []; // Pour éviter les doublons
         for ($i = 1; $i <= 12; $i++) {
             $gameId = ($i - 1) % count($games) + 1;
+            
+            // Générer un nom unique
+            do {
+                $firstName = $firstNames[array_rand($firstNames)];
+                $lastName = $lastNames[array_rand($lastNames)];
+                $fullName = $firstName . ' ' . $lastName;
+            } while (in_array($fullName, $usedNames));
+            $usedNames[] = $fullName;
+            
+            // Générer un pseudo Discord gaming
+            $discordName = $gamingPrefixes[array_rand($gamingPrefixes)] . $gamingSuffixes[array_rand($gamingSuffixes)];
+            
             // Créneaux de disponibilité fictifs pour chaque coach
             $availability = [
                 'Lundi 18:00-20:00',
@@ -45,14 +84,14 @@ class UserTableSeeder extends Seeder
                 'Samedi 10:00-12:00'
             ];
             $coaches[] = [
-                'name' => 'Coach ' . $i,
-                'email' => 'coach' . $i . '@example.com',
-                'discord' => 'Coach#' . str_pad($i, 4, '0', STR_PAD_LEFT),
+                'name' => $fullName,
+                'email' => strtolower($firstName . '.' . $lastName . '@coach.com'),
+                'discord' => $discordName . '#' . rand(1000, 9999),
                 'password' => Hash::make('password'),
                 'role' => 'coach',
                 'tarif' => rand(10, 30),
                 'game_id' => $gameId,
-                'biographie' => 'This is the biography of Coach ' . $i . '. With expertise in ' . $games[$gameId] . ', Coach ' . $i . ' is dedicated to helping players improve their skills and achieve their goals in the game.',
+                'biographie' => 'Coach professionnel spécialisé en ' . $games[$gameId] . '. Avec plusieurs années d\'expérience en compétition, je vous aide à développer vos compétences et à atteindre vos objectifs gaming.',
                 'availability' => json_encode($availability),
                 'created_at' => now(),
                 'updated_at' => now()
@@ -60,10 +99,21 @@ class UserTableSeeder extends Seeder
         }
         // Create students
         for ($i = 1; $i <= 12; $i++) {
+            // Générer un nom unique
+            do {
+                $firstName = $firstNames[array_rand($firstNames)];
+                $lastName = $lastNames[array_rand($lastNames)];
+                $fullName = $firstName . ' ' . $lastName;
+            } while (in_array($fullName, $usedNames));
+            $usedNames[] = $fullName;
+            
+            // Générer un pseudo Discord gaming
+            $discordName = $gamingPrefixes[array_rand($gamingPrefixes)] . $gamingSuffixes[array_rand($gamingSuffixes)];
+            
             $students[] = [
-                'name' => 'Student ' . $i,
-                'email' => 'student' . $i . '@example.com',
-                'discord' => 'Student#' . str_pad($i, 4, '0', STR_PAD_LEFT),
+                'name' => $fullName,
+                'email' => strtolower($firstName . '.' . $lastName . '@student.com'),
+                'discord' => $discordName . '#' . rand(1000, 9999),
                 'password' => Hash::make('password'),
                 'role' => 'student',
                 'created_at' => now(),
@@ -78,6 +128,22 @@ class UserTableSeeder extends Seeder
         // Fetch the inserted coaches and students to get their IDs
         $insertedCoaches = DB::table('users')->where('role', 'coach')->get();
         $insertedStudents = DB::table('users')->where('role', 'student')->get();
+
+        // Commentaires aléatoires pour les notes des étudiants
+        $commentaires = [
+            'Excellent coach ! M\'a vraiment aidé à progresser rapidement. Je recommande vivement ses services.',
+            'Très professionnel et patient. Les sessions étaient parfaitement adaptées à mon niveau.',
+            'Coach fantastique ! Grâce à lui, j\'ai enfin compris les stratégies avancées du jeu.',
+            'Super expérience ! Le coach est très pédagogue et m\'a donné de précieux conseils.',
+            'Coaching de qualité exceptionnelle. J\'ai vu une amélioration immédiate de mes performances.',
+            'Coach très compétent qui sait s\'adapter au style de jeu de chacun. Merci beaucoup !',
+            'Sessions enrichissantes et motivantes. Le coach m\'a redonné confiance en mes capacités.',
+            'Parfait ! Le coach a su identifier mes points faibles et m\'aider à les corriger efficacement.',
+            'Excellent pédagogue. Les explications sont claires et les exercices bien pensés.',
+            'Coach très sympathique et professionnel. J\'ai appris énormément en peu de temps.',
+            'Coaching personnalisé et de haute qualité. Je recommande sans hésitation !',
+            'Merci pour ces sessions formidables ! Mon niveau de jeu s\'est considérablement amélioré.',
+        ];
 
         // Insert notes for each coach-student pair
 
@@ -98,7 +164,7 @@ class UserTableSeeder extends Seeder
                     DB::table('notes')->insert([
                         'coach_id' => $randomCoach->id,
                         'user_id' => $student->id,
-                        'commentaire' => 'Commentaire pour le coach ' . $randomCoach->name . ' de la part de l\'étudiant ' . $student->name,
+                        'commentaire' => $commentaires[array_rand($commentaires)],
                         'created_at' => now(),
                         'updated_at' => now()
                     ]);
