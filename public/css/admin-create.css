@@ -1,0 +1,162 @@
+/* Police de base pour le corps du document */
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Classe utilitaire pour un conteneur flexible */
+.flex {
+    display: flex;
+}
+
+/* Classe utilitaire pour centrer horizontalement */
+.justify-center {
+    justify-content: center;
+}
+
+/* Classe utilitaire pour centrer verticalement */
+.items-center {
+    align-items: center;
+}
+
+/* Classe utilitaire pour une hauteur minimale de 100% de la hauteur de la fenêtre */
+.min-h-screen {
+    min-height: 100vh;
+}
+
+/* Classe utilitaire pour un padding vertical */
+.py-10 {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+}
+
+/* Style du conteneur du formulaire */
+.form-container {
+    width: 100%;
+    max-width: 60rem;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+/* Style du titre du formulaire */
+.form-title {
+    font-size: 1.875rem;
+    font-weight: bold;
+    text-align: center;
+    color: #4338ca;
+    margin-bottom: 2rem;
+}
+
+/* Style du message de succès */
+.success-message {
+    background-color: #dcfce7;
+    border-left: 0.25rem solid #10b981;
+    color: #047857;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Conteneur pour centrer le formulaire */
+.form-center-container {
+    display: flex;
+    justify-content: center;
+}
+
+/* Classe utilitaire pour la largeur du formulaire */
+.form-width {
+    width: 100%;
+}
+
+/* Ajustement de la largeur du formulaire pour les écrans plus larges */
+@media (min-width: 768px) {
+    .form-width {
+        width: 66.666667%;
+    }
+}
+
+/* Espacement des éléments du formulaire */
+.form-space > div {
+    margin-bottom: 1.5rem;
+}
+
+/* Style des étiquettes du formulaire */
+.form-label {
+    display: block;
+    color: #374151;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+/* Style des champs de saisie du formulaire */
+.form-input {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+}
+
+/* Effet de focus pour les champs de saisie */
+.form-input:focus {
+    outline: none;
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.5);
+}
+
+/* Style des champs de saisie en cas d'erreur */
+.form-input-error {
+    border-color: #ef4444;
+}
+
+/* Style des messages d'erreur */
+.form-error {
+    color: #ef4444;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+}
+
+/* Classe utilitaire pour cacher un élément */
+.hidden {
+    display: none;
+}
+
+/* Style du bouton de soumission */
+.submit-button {
+    width: 100%;
+    background-color: #4f46e5;
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+}
+
+/* Effet de survol pour le bouton de soumission */
+.submit-button:hover {
+    background-color: #4338ca;
+}
+
+/* Conteneur pour les boutons */
+.button-container {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+}
+
+/* Style du bouton de retour */
+.back-button {
+    padding: 0.5rem 1rem;
+    background-color: #6366f1;
+    color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s;
+}
+
+/* Effet de survol pour le bouton de retour */
+.back-button:hover {
+    background-color: #4f46e5;
+}

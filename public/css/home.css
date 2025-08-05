@@ -1,0 +1,223 @@
+/* Section principale en haut de la page */
+.hero-section {
+    position: relative;
+    min-height: 900px;
+    background-size: cover; /* Fond couvre toute la section */
+    background-position: center; /* Fond centré */
+    border-radius: 16px; /* Bords arrondis */
+    margin-bottom: 3rem;
+    overflow: hidden; /* Cache le débordement */
+    display: flex;
+    align-items: center; /* Centre verticalement */
+    justify-content: center; /* Centre horizontalement */
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.6); /* Fond noir transparent */
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1; /* Met le contenu au-dessus */
+    text-align: center;
+    color: #fff; /* Texte blanc */
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto; /* Centre le contenu */
+    padding: 3rem 1rem;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+.hero-desc {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto; /* Centre le texte */
+}
+
+.hero-actions {
+    display: flex;
+    justify-content: center; /* Centre les éléments */
+    align-items: center;
+    gap: 1rem; /* Espace entre les éléments */
+    margin-top: 1rem;
+    flex-wrap: wrap; /* Retour à la ligne si nécessaire */
+}
+
+.btn-main {
+    background: #db2777; /* Bouton rose */
+    color: #fff;
+    font-weight: 600;
+    padding: 0.9rem 2.5rem;
+    border-radius: 999px; /* Bouton rond */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* Ombre légère */
+    text-decoration: none;
+    transition: background 0.2s; /* Animation douce */
+    border: none;
+    cursor: pointer; /* Curseur main */
+}
+
+.btn-main:hover {
+    background: #be185d; /* Couleur au survol */
+}
+
+/* Menu déroulant */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-btn {
+    background: #4338ca; /* Bouton bleu */
+    color: #fff;
+    font-weight: 600;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.dropdown-btn:hover {
+    background: #3730a3; /* Couleur au survol */
+}
+
+.dropdown-list {
+    display: none; /* Cache la liste */
+    position: absolute;
+    left: 0;
+    top: 110%; /* Position sous le bouton */
+    background: rgba(255,255,255,0.95); /* Fond blanc transparent */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    min-width: 120px;
+    z-index: 30;
+    padding: 0.5rem 0;
+}
+
+.dropdown:hover .dropdown-list,
+.dropdown:focus-within .dropdown-list {
+    display: block; /* Affiche la liste */
+}
+
+.dropdown-link {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #4338ca;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.dropdown-link:hover {
+    background: #eef2ff; /* Couleur au survol */
+}
+
+/* Message de succès */
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.alert-success {
+    background: #d1fae5; /* Fond vert clair */
+    border-left: 4px solid #10b981; /* Bordure verte */
+    color: #065f46;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    max-width: 700px;
+    border-radius: 8px;
+}
+
+/* Section de description */
+.desc-section {
+    display: flex;
+    flex-direction: column; /* Colonnes verticales */
+    align-items: center;
+    padding: 3rem 1rem;
+}
+
+.desc-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.desc-steps {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem; /* Espace entre les éléments */
+}
+
+@media (min-width: 768px) {
+    .desc-steps {
+        flex-direction: row; /* Ligne horizontale sur grands écrans */
+        justify-content: center;
+        align-items: flex-start;
+    }
+}
+
+.desc-col {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.desc-step {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 1.5rem;
+    width: 260px;
+}
+
+.desc-step-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #4338ca;
+}
+
+.desc-step-text {
+    color: #374151;
+}
+
+.desc-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrow-img {
+    width: 64px;
+    height: 64px;
+}
+
+@media (min-width: 768px) {
+    .arrow-img {
+        width: 96px;
+        height: 96px;
+    }
+}
+
+.desc-step-final {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.trophy-img {
+    width: 64px;
+    height: 64px;
+    margin-bottom:

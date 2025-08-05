@@ -1,0 +1,170 @@
+/* Nouveau commentaire expliquant le style général pour le corps de la page */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif; /* Police de caractère */
+    background: #f3f4f6; /* Couleur de fond */
+    min-height: 100vh; /* Hauteur minimale */
+    margin: 0; /* Supprime les marges */
+    display: flex; /* Utilise Flexbox */
+    flex-direction: column; /* Dispose les éléments en colonne */
+}
+
+/* Nouveau commentaire pour le conteneur principal */
+.container {
+    max-width: 1200px; /* Largeur maximale */
+    margin: 0 auto; /* Centre le conteneur */
+    width: 100%; /* Prend toute la largeur */
+    padding: 0 1rem; /* Espace sur les côtés */
+}
+
+/* Nouveau commentaire pour la barre de navigation */
+.navbar {
+    background: #fff; /* Fond blanc */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04); /* Ombre légère */
+    margin-bottom: 1.5rem; /* Marge en bas */
+}
+
+.navbar-container {
+    display: flex; /* Flexbox */
+    align-items: center; /* Centre verticalement */
+    justify-content: space-between; /* Espace horizontalement */
+    padding: 1rem 0; /* Espace intérieur */
+}
+
+.navbar-logo {
+    height: 48px; /* Hauteur du logo */
+}
+
+.navbar-nav {
+    display: flex; /* Flexbox */
+    gap: 1.5rem; /* Espace entre les éléments */
+    list-style: none; /* Supprime les puces */
+    align-items: center; /* Centre verticalement */
+    margin: 0; /* Supprime les marges */
+    padding: 0; /* Supprime les rembourrages */
+}
+
+.navbar-link {
+    color: #374151; /* Couleur du texte */
+    font-weight: 600; /* Texte en gras */
+    text-decoration: none; /* Supprime le soulignement */
+    transition: color 0.2s; /* Transition pour la couleur */
+}
+
+.navbar-link:hover {
+    color: #4338ca; /* Couleur au survol */
+}
+
+.navbar-link.logout {
+    color: #dc2626; /* Couleur rouge */
+}
+
+.navbar-link.logout:hover {
+    color: #991b1b; /* Rouge plus foncé au survol */
+}
+
+/* Nouveau commentaire pour le contenu principal */
+.main-content {
+    flex: 1; /* Prend tout l'espace disponible */
+    min-height: 60vh; /* Hauteur minimale */
+    padding: 2rem 0; /* Espace intérieur */
+}
+
+/* Nouveau commentaire pour le pied de page */
+.footer {
+    background: #fff; /* Fond blanc */
+    border-top: 1px solid #e5e7eb; /* Bordure supérieure */
+    margin-top: 2rem; /* Marge en haut */
+    padding: 2rem 0; /* Espace intérieur */
+}
+
+.footer-container {
+    display: flex; /* Flexbox */
+    flex-wrap: wrap; /* Retour à la ligne */
+    gap: 2rem; /* Espace entre les éléments */
+    justify-content: space-between; /* Espace horizontalement */
+}
+
+.footer-title {
+    font-size: 1.1rem; /* Taille de la police */
+    font-weight: bold; /* Texte en gras */
+    margin-bottom: 0.5rem; /* Marge en bas */
+    color: #4338ca; /* Couleur indigo */
+}
+
+.footer-list {
+    list-style: none; /* Supprime les puces */
+    padding: 0; /* Supprime les rembourrages */
+    margin: 0; /* Supprime les marges */
+}
+
+.footer-link {
+    color: #374151; /* Couleur du texte */
+    text-decoration: none; /* Supprime le soulignement */
+    transition: color 0.2s; /* Transition pour la couleur */
+    display: block; /* Affiche comme un bloc */
+    margin-bottom: 0.3rem; /* Marge en bas */
+}
+
+.footer-link:hover {
+    color: #4338ca; /* Couleur au survol */
+}
+
+/* ...existing code... */
+
+/* Responsive amélioré pour le layout */
+@media (max-width: 1024px) {
+    .container {
+        max-width: 95vw;
+        padding: 0 0.5rem;
+    }
+    .footer-container {
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-container,
+    .footer-container {
+        flex-direction: column;
+        align-items: center; /* Centrer horizontalement */
+        gap: 1rem;
+    }
+    .navbar-nav {
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+        align-items: center; /* Centrer les liens dans la nav */
+        justify-content: center;
+    }
+    .navbar-link {
+        width: auto;
+        padding: 0.5rem 0;
+        text-align: center;
+    }
+    .main-content {
+        padding: 1rem 0;
+    }
+    .footer {
+        padding: 1.5rem 0;
+    }
+    .footer-title {
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .container {
+        padding: 0 0.2rem;
+    }
+    .navbar-logo {
+        height: 36px;
+    }
+    .footer-title {
+        font-size: 1rem;
+    }
+    .footer-link {
+        font-size: 0.95rem;
+    }
+}
+
+/* ...existing code... */
