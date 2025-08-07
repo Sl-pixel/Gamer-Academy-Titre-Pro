@@ -33,10 +33,15 @@ npm install
 ```
 3. ** Configurer l'environnement :**
 Copiez le fichier .env.example en .env :
-   ```bash
+  ```bash
 npm install
+```
 
-Générez une clé d'application :
+4. **Générez une clé d'application :**
+
+ ```
+npm install
+ ```
 php artisan key:generate
 
 Configurez votre fichier .env avec les informations de votre base de données.
