@@ -41,13 +41,13 @@ npm install
 
  ```
 npm install
- ```
 php artisan key:generate
+ ```
 
-Configurez votre fichier .env avec les informations de votre base de données.
+5. **Configurez votre fichier .env avec les informations de votre base de données.**
 
 Exécuter les migrations :
-php artisan migrate
+```php artisan migrate```
 
 Compiler les assets :
 npm run dev
