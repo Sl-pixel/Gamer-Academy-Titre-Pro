@@ -39,8 +39,7 @@ npm install
 
 4. **Générez une clé d'application :**
 
- ```
-npm install
+```
 php artisan key:generate
  ```
 
@@ -50,9 +49,9 @@ Exécuter les migrations :
 ```php artisan migrate```
 
 Compiler les assets :
-npm run dev
+```npm run dev```
 
 Lancer le serveur de développement :
-php artisan serve
+```php artisan serve```
 
 Ce format est bien structuré et facile à suivre pour prendre en main un projet Laravel.
