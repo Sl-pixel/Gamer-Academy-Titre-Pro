@@ -39,19 +39,25 @@ npm install
 
 4. **Générez une clé d'application :**
 
-```
+```bash
 php artisan key:generate
  ```
 
 5. **Configurez votre fichier .env avec les informations de votre base de données.**
 
 Exécuter les migrations :
-```php artisan migrate```
+```bash
+php artisan migrate
+```
 
 Compiler les assets :
-```npm run dev```
+```bash
+npm run dev
+```
 
 Lancer le serveur de développement :
-```php artisan serve```
+```bash
+php artisan serve
+```
 
 Ce format est bien structuré et facile à suivre pour prendre en main un projet Laravel.
