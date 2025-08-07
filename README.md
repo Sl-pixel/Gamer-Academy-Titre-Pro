@@ -18,18 +18,23 @@ Avant de commencer, assurez-vous d'avoir installé les éléments suivants sur v
    ```bash
    git clone [URL_DU_DEPOT]
    cd nom-du-projet
-Installer les dépendances :
+   
+2. **Installer les dépendances :**
 
 Dépendances PHP :
+   ```bash
 composer install
+```
 
 Dépendances JavaScript :
+
+   ```bash
 npm install
-
-Configurer l'environnement :
-
+```
+3. ** Configurer l'environnement :**
 Copiez le fichier .env.example en .env :
-cp .env.example .env
+   ```bash
+npm install
 
 Générez une clé d'application :
 php artisan key:generate
